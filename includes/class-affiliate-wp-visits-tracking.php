@@ -5,9 +5,6 @@
  * @package Affiliate_WP_Visits_Tracking
  */
 
-define( 'AFFILIATE_WP_REST_UN', 'c2f2cd32d9ec789b22df2e671ff54e6d' );
-define( 'AFFILIATE_WP_REST_PWD', '5c613e7a776658b63050cb9f062fa5ca' );
-
 /**
  * The Affiliate_WP_Visits_Tracking class.
  *
@@ -43,6 +40,27 @@ class Affiliate_WP_Visits_Tracking {
 	 */
 	public function __construct() {
 
+		$this->define_constants();
+	}
+
+	/**
+	 * Define all required constants.
+	 *
+	 * @since 1.0
+	 */
+	private function define_constants() {
+
+		$settings   = get_option( AWP_SETTINGS_GROUP );
+		$public_key = '';
+		$token      = '';
+		if ( isset( $settings['public_key'] ) && isset( $settings['token'] ) ) {
+			$public_key = $settings['public_key'];
+			$token      = $settings['token'];
+		}
+
+		define( 'AFFILIATE_WP_REST_UN', $public_key );
+		define( 'AFFILIATE_WP_REST_PWD', $token );
+
 	}
 
 	/**
@@ -68,11 +86,14 @@ class Affiliate_WP_Visits_Tracking {
 	 * @since 1.0
 	 */
 	public function track_visit() {
-		if ( ! isset( $_COOKIE['affwp_visit_id'] ) ) {
-			$referrer     = ! empty( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( $_SERVER['HTTP_REFERER'] ) : '';
+
+		$affiliate_id        = isset( $_GET[ $this->referral_variable ] ) ? absint( $_GET[ $this->referral_variable ] ) : 0;
+		$cookie_affiliate_id = isset( $_COOKIE['affwp_affiliate_id'] ) ? absint( $_COOKIE['affwp_affiliate_id'] ) : 0;
+
+		if ( $affiliate_id !== $cookie_affiliate_id ) {
 			$campaign     = isset( $_GET['campaign'] ) ? sanitize_text_field( $_GET['campaign'] ) : '';
-			$affiliate_id = isset( $_GET[ $this->referral_variable ] ) ? absint( $_GET[ $this->referral_variable ] ) : 0;
-			$store_url    = $this->get_option( 'url' ) . '/wp-json/affwp/v1/visits';
+			$landing_page = $this->get_option( 'url' );
+			$store_url    = $landing_page . '/wp-json/affwp/v1/visits';
 
 			$pload = array(
 				'method'      => 'POST',
@@ -91,20 +112,20 @@ class Affiliate_WP_Visits_Tracking {
 				array(
 					'affiliate_id' => $affiliate_id,
 					'ip'           => $this->get_ip(),
-					'url'          => set_url_scheme( home_url( '/' ) . $_SERVER['REQUEST_URI'] ),
+					'url'          => esc_url( $landing_page ),
 					'campaign'     => $campaign,
-					'referrer'     => $referrer,
+					'referrer'     => esc_url( home_url() . $_SERVER['REQUEST_URI'] ),
 				),
 				$store_url
 			);
 
 			$response = wp_remote_post( $store_url, $pload );
+			$code     = wp_remote_retrieve_response_code( $response );
 
-			if ( ! is_wp_error( $response ) ) {
-				$body          = wp_remote_retrieve_body( $response );
-				$response_json = json_decode( $body );
-				$cookie_time   = '+' . $this->get_option( 'cookie_expiration' ) . ' day';
-				setcookie( 'affwp_visit_id', $response_json->visit_id, strtotime( $cookie_time ) );
+			if ( ! is_wp_error( $response ) && ( 201 == $code || 200 == $code ) ) {
+				$cookie_time = '+' . $this->get_option( 'cookie_expiration' ) . ' day';
+				setcookie( 'affwp_affiliate_id', $affiliate_id, strtotime( $cookie_time ), '/' );
+				setcookie( 'affwp_erl_id', $affiliate_id, strtotime( $cookie_time ), '/' );
 			}
 		}
 

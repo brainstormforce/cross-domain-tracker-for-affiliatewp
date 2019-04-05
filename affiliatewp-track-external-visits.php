@@ -22,6 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Set constants.
  */
 define( 'AFILIATE_WP_EXTERNAL_VISITS_FILE', __FILE__ );
+define( 'AFILIATE_WP_EXTERNAL_VISITS_TEXT_DOMAIN', 'affiliatewp-track-external-visits' );
 
 /**
  * Loader
