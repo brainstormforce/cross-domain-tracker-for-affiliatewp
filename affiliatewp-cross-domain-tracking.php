@@ -18,15 +18,15 @@
  */
 
 // Exit if accessed directly.
-if (! defined('ABSPATH') ) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
 /**
  * Set constants.
  */
-define('AFILIATE_WP_EXTERNAL_VISITS_FILE', __FILE__);
-define('AFILIATE_WP_EXTERNAL_VISITS_TEXT_DOMAIN', 'affiliatewp-track-external-visits');
+define( 'AFILIATE_WP_EXTERNAL_VISITS_FILE', __FILE__ );
+define( 'AFILIATE_WP_EXTERNAL_VISITS_TEXT_DOMAIN', 'affiliatewp-external-visits' );
 
 /**
  * Loader
