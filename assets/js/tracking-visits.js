@@ -12,7 +12,7 @@ jQuery(document).ready(
             var referral_variable = awp_track_visit_var.referral_variable;
             $(target_urls).each(
                 function () {
-                    current_url = $(this).attr("href"), $(this).attr("href", updateQueryStringParameter(current_url, referral_variable, affiliate_id) + "&visited_id=" + visited_cookie);
+                    current_url = $(this).attr("href"), $(this).attr("href", updateQueryStringParameter(current_url, referral_variable, affiliate_id) + "&visit=" + visited_cookie);
                 }
             );
         }
