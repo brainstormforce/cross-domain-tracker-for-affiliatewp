@@ -5,7 +5,6 @@
  * @package Affiliate_WP_Visits_Tracking
  */
 
-// phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
 /**
  * Class AffiliateWP_Track_External_Visits.
  */
@@ -74,8 +73,8 @@ final class Affiliate_WP_Track_External_Visits {
 	 */
 	public function register_menu() {
 		add_options_page(
-			__( 'External Visits', AFILIATE_WP_EXTERNAL_VISITS_TEXT_DOMAIN ),
-			__( 'External Visits', AFILIATE_WP_EXTERNAL_VISITS_TEXT_DOMAIN ),
+			__( 'External Visits', 'affiliatewp-external-visits' ),
+			__( 'External Visits', 'affiliatewp-external-visits' ),
 			'manage_options',
 			AWP_PAGE,
 			array( $this, 'admin_page_view_callback' )
@@ -88,7 +87,7 @@ final class Affiliate_WP_Track_External_Visits {
 		?>
 		<div class="wrap">
 
-			<h2><?php _e( 'AffiliateWP - External Visits', AFILIATE_WP_EXTERNAL_VISITS_TEXT_DOMAIN ); ?></h2>
+			<h2><?php _e( 'AffiliateWP - External Visits', 'affiliatewp-external-visits' ); ?></h2>
 
 			<form action="options.php" method="POST">
 		<?php
@@ -123,27 +122,27 @@ final class Affiliate_WP_Track_External_Visits {
 
 		add_settings_field(
 			'Public Key',
-			__( 'Public Key', AFILIATE_WP_EXTERNAL_VISITS_TEXT_DOMAIN ),
+			__( 'Public Key', 'affiliatewp-external-visits' ),
 			array( $this, 'callback_input' ),
 			AWP_PAGE,
 			AWP_SECTION,
 			array(
 				'name'        => 'public_key',
 				'id'          => 'public_key',
-				'description' => __( 'Generate API key and copy/paste public key from your store where AffiliateWP is installed!', AFILIATE_WP_EXTERNAL_VISITS_TEXT_DOMAIN ),
+				'description' => __( 'Generate API key and copy/paste public key from your store where AffiliateWP is installed!', 'affiliatewp-external-visits' ),
 			)
 		);
 
 		add_settings_field(
 			'Token',
-			__( 'Token', AFILIATE_WP_EXTERNAL_VISITS_TEXT_DOMAIN ),
+			__( 'Token', 'affiliatewp-external-visits' ),
 			array( $this, 'callback_input' ),
 			AWP_PAGE,
 			AWP_SECTION,
 			array(
 				'name'        => 'token',
 				'id'          => 'token',
-				'description' => __( 'Generate API key and copy/paste token from your store where AffiliateWP is installed!', AFILIATE_WP_EXTERNAL_VISITS_TEXT_DOMAIN ),
+				'description' => __( 'Generate API key and copy/paste token from your store where AffiliateWP is installed!', 'affiliatewp-external-visits' ),
 			)
 		);
 
@@ -226,7 +225,7 @@ final class Affiliate_WP_Track_External_Visits {
 	 * @return void
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Something went wrong!', AFILIATE_WP_EXTERNAL_VISITS_TEXT_DOMAIN ), '1.0' );
+		_doing_it_wrong( __FUNCTION__, __( 'Something went wrong!', 'affiliatewp-external-visits' ), '1.0' );
 	}
 
 	/**
@@ -237,7 +236,7 @@ final class Affiliate_WP_Track_External_Visits {
 	 * @return void
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Something went wrong!', AFILIATE_WP_EXTERNAL_VISITS_TEXT_DOMAIN ), '1.0' );
+		_doing_it_wrong( __FUNCTION__, __( 'Something went wrong!', 'affiliatewp-external-visits' ), '1.0' );
 	}
 
 	/**
@@ -269,4 +268,3 @@ function affiliate_wp_track_external_visits() {
 	return Affiliate_WP_Track_External_Visits::instance();
 }
 add_action( 'plugins_loaded', 'affiliate_wp_track_external_visits', 999 );
-// phpcs:enable WordPress.WP.I18n.NonSingularStringLiteralDomain
