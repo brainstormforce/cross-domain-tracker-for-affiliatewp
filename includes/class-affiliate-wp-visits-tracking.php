@@ -118,6 +118,11 @@ class Affiliate_WP_Visits_Tracking {
 	 */
 	public function track_visit() {
 
+		$settings = get_option( AWP_SETTINGS_GROUP );
+		if ( ! isset( $settings['referral_credit_last'] ) && isset( $_COOKIE['affwp_visit_id'] ) && isset( $_COOKIE['affwp_affiliate_id'] ) ) {
+			return;
+		}
+
 		$affiliate_id        = isset( $_GET[ $this->referral_variable ] ) ? absint( $_GET[ $this->referral_variable ] ) : 0;
 		$cookie_affiliate_id = isset( $_COOKIE['affwp_affiliate_id'] ) ? absint( $_COOKIE['affwp_affiliate_id'] ) : 0;
 
@@ -125,7 +130,7 @@ class Affiliate_WP_Visits_Tracking {
 			$campaign     = isset( $_GET['campaign'] ) ? sanitize_text_field( $_GET['campaign'] ) : '';
 			$landing_page = $this->get_option( 'url' );
 			$store_url    = $landing_page . '/wp-json/affwp/v1/visits';
-			$referrer     = ! empty( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( $_SERVER['HTTP_REFERER'] ) : '';
+			$referrer     = ! empty( $_SERVER['HTTP_REFERER'] ) ? esc_url( $_SERVER['HTTP_REFERER'] ) : '';
 
 			$pload = array(
 				'method'      => 'POST',
