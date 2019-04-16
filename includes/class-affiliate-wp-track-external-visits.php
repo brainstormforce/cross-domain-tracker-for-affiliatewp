@@ -241,7 +241,7 @@ final class Affiliate_WP_Track_External_Visits {
 			self::$instance   = new Affiliate_WP_Track_External_Visits();
 			self::$plugin_dir = plugin_dir_path( AFILIATE_WP_EXTERNAL_VISITS_FILE );
 			self::$plugin_url = plugin_dir_url( AFILIATE_WP_EXTERNAL_VISITS_FILE );
-			self::$version    = '1.0.0';
+			self::$version    = '1.0.1';
 			self::$instance->includes();
 		}
 

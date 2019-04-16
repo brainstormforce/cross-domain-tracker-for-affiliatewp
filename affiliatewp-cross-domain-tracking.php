@@ -5,7 +5,7 @@
  * Description: Allows you to track external visits.
  * Author: BSF
  * Author URI: https://www.brainstormforce.com
- * Version: 1.0.0
+ * Version: 1.0.1
  * Text Domain: affiliatewp-external-visits
  * Domain Path: languages
  * WC requires at least: 3.0
