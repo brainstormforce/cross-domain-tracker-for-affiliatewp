@@ -146,6 +146,19 @@ final class Affiliate_WP_Track_External_Visits {
 			)
 		);
 
+		add_settings_field(
+			'Credit Last Referral',
+			__( 'Credit Last Referrer', 'affiliatewp-external-visits' ),
+			array( $this, 'callback_input_checkbox' ),
+			AWP_PAGE,
+			AWP_SECTION,
+			array(
+				'name'        => 'referral_credit_last',
+				'id'          => 'referral_credit_last',
+				'description' => __( 'Credit the last affiliate who referred the customer.', 'affiliatewp-external-visits' ),
+			)
+		);
+
 		register_setting(
 			AWP_SETTINGS_GROUP,
 			AWP_SETTINGS_GROUP
@@ -191,6 +204,27 @@ final class Affiliate_WP_Track_External_Visits {
 	}
 
 	/**
+	 * Input field callback
+	 *
+	 * @param array $args arguments.
+	 * @since 1.0
+	 */
+	public function callback_input_checkbox( $args ) {
+
+		$options = get_option( AWP_SETTINGS_GROUP );
+		$value   = isset( $options[ $args['name'] ] ) ? true : false;
+
+		?>
+		<input <?php echo $value ? 'checked' : ''; ?> type="checkbox" id="<?php echo $args['id']; ?>" name="<?php echo AWP_SETTINGS_GROUP; ?>[<?php echo $args['name']; ?>]" value="<?php echo $value; ?>"  />
+
+		<?php if ( isset( $args['description'] ) ) : ?>
+			<p class="description"><?php echo $args['description']; ?></p>
+		<?php endif; ?>
+		<?php
+
+	}
+
+	/**
 	 * Main AffiliateWP_Track_External_Visits Instance
 	 *
 	 * Insures that only one instance of AffiliateWP_Track_External_Visits exists in memory at any one
@@ -207,7 +241,7 @@ final class Affiliate_WP_Track_External_Visits {
 			self::$instance   = new Affiliate_WP_Track_External_Visits();
 			self::$plugin_dir = plugin_dir_path( AFILIATE_WP_EXTERNAL_VISITS_FILE );
 			self::$plugin_url = plugin_dir_url( AFILIATE_WP_EXTERNAL_VISITS_FILE );
-			self::$version    = '1.0.0';
+			self::$version    = '1.0.1';
 			self::$instance->includes();
 		}
 
