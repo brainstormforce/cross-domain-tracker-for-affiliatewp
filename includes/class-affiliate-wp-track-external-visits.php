@@ -80,8 +80,10 @@ final class Affiliate_WP_Track_External_Visits {
 	 */
 	public function check_store_connection() {
 
+
+	    
 		$plugin_type = $this->get_option( 'cdtawp_plugin_type' );
-		if ( CDTAWP_PLUGIN_CHILD != $plugin_type || ! is_admin() ) {
+		if ( ( !isset($_GET['page']) || CDTAWP_PAGE != $_GET['page'] ) || (CDTAWP_PLUGIN_CHILD != $plugin_type || ! is_admin()) ) {
 			return;
 		}
 
@@ -134,7 +136,7 @@ final class Affiliate_WP_Track_External_Visits {
 	 * @since 1.0
 	 */
 	private function define_constants() {
-		define( 'AWP_PAGE', 'external-visits' );
+		define( 'CDTAWP_PAGE', 'external-visits' );
 		define( 'CDTAWP_SETTINGS_GROUP', 'cdtawp_settings' );
 		define( 'CDTAWP_SECTION', 'cdtawp_settings_section' );
 		define( 'CDTAWP_CONNECTION_SECTION', 'cdtawp_connection_settings_section' );
@@ -154,7 +156,7 @@ final class Affiliate_WP_Track_External_Visits {
 			__( 'Cross Domain Tracker for AffiliateWP', 'affiliatewp-external-visits' ),
 			__( 'Cross Domain Tracker for AffiliateWP', 'affiliatewp-external-visits' ),
 			'manage_options',
-			AWP_PAGE,
+			CDTAWP_PAGE,
 			array( $this, 'admin_page_view_callback' )
 		);
 	}
@@ -178,7 +180,7 @@ final class Affiliate_WP_Track_External_Visits {
 			<form action="options.php" method="POST">
 		<?php
 		settings_fields( CDTAWP_SETTINGS_GROUP );
-		do_settings_sections( AWP_PAGE );
+		do_settings_sections( CDTAWP_PAGE );
 		submit_button();
 		?>
 
@@ -202,7 +204,7 @@ final class Affiliate_WP_Track_External_Visits {
 			CDTAWP_SECTION,
 			__( 'General Settings', 'affiliatewp-external-visits' ),
 			array( $this, 'cdtawp_section_callback' ),
-			AWP_PAGE
+			CDTAWP_PAGE
 		);
 
 		// URL to search for.
@@ -210,7 +212,7 @@ final class Affiliate_WP_Track_External_Visits {
 			'Use Plugin As',
 			__( 'Use Plugin As', 'affiliatewp-external-visits' ),
 			array( $this, 'callback_input_dropdown' ),
-			AWP_PAGE,
+			CDTAWP_PAGE,
 			CDTAWP_SECTION,
 			array(
 				'name'        => 'cdtawp_plugin_type',
@@ -224,7 +226,7 @@ final class Affiliate_WP_Track_External_Visits {
 			'Site URL',
 			__( 'Site URL', 'affiliatewp-external-visits' ),
 			array( $this, 'callback_input_text' ),
-			AWP_PAGE,
+			CDTAWP_PAGE,
 			CDTAWP_SECTION,
 			array(
 				'name'        => 'cdtawp_store_url',
@@ -238,7 +240,7 @@ final class Affiliate_WP_Track_External_Visits {
 			'Referral Variable',
 			__( 'Referral Variable', 'affiliatewp-external-visits' ),
 			array( $this, 'callback_input_text' ),
-			AWP_PAGE,
+			CDTAWP_PAGE,
 			CDTAWP_SECTION,
 			array(
 				'name'        => 'cdtawp_referral_variable',
@@ -252,7 +254,7 @@ final class Affiliate_WP_Track_External_Visits {
 			'Cookie Expiration',
 			__( 'Cookie Expiration', 'affiliatewp-external-visits' ),
 			array( $this, 'callback_input_number' ),
-			AWP_PAGE,
+			CDTAWP_PAGE,
 			CDTAWP_SECTION,
 			array(
 				'name'        => 'cdtawp_cookie_expiration',
@@ -266,7 +268,7 @@ final class Affiliate_WP_Track_External_Visits {
 			'Credit Last Referral',
 			__( 'Credit Last Referrer', 'affiliatewp-external-visits' ),
 			array( $this, 'callback_input_checkbox' ),
-			AWP_PAGE,
+			CDTAWP_PAGE,
 			CDTAWP_SECTION,
 			array(
 				'name'        => 'cdtawp_referral_credit_last',
@@ -280,14 +282,14 @@ final class Affiliate_WP_Track_External_Visits {
 			CDTAWP_CONNECTION_SECTION,
 			__( 'Store Connection Settings', 'affiliatewp-external-visits' ),
 			array( $this, 'cdtawp_section_callback' ),
-			AWP_PAGE
+			CDTAWP_PAGE
 		);
 
 		add_settings_field(
 			'Public Key',
 			__( 'Public Key', 'affiliatewp-external-visits' ),
 			array( $this, 'callback_input_text' ),
-			AWP_PAGE,
+			CDTAWP_PAGE,
 			CDTAWP_CONNECTION_SECTION,
 			array(
 				'name'        => 'cdtawp_public_key',
@@ -300,7 +302,7 @@ final class Affiliate_WP_Track_External_Visits {
 			'Token',
 			__( 'Token', 'affiliatewp-external-visits' ),
 			array( $this, 'callback_input_text' ),
-			AWP_PAGE,
+			CDTAWP_PAGE,
 			CDTAWP_CONNECTION_SECTION,
 			array(
 				'name'        => 'cdtawp_token',
