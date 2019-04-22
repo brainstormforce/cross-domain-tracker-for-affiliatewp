@@ -105,8 +105,8 @@ final class Affiliate_WP_Track_External_Visits {
 		$code     = wp_remote_retrieve_response_code( $response );
 
 		if ( 200 != $code && 201 != $code ) {
-			$class   = 'notice notice-error is-dismissible';
-			$message = __( 'Filed to connect with store, you must check store url, public key & token', 'affiliatewp-external-visits' );
+			$class   = 'notice notice-warning is-dismissible';
+			$message = __( 'Please update & verify your settings to connect with store!', 'affiliatewp-external-visits' );
 			printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
 		} else {
 
