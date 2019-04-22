@@ -3,7 +3,7 @@ jQuery(document).ready(
 
 
         var visited_cookie = Cookies.get("affwp_visit_id");
-        var affiliate_id = Cookies.get("affwp_erl_id")
+        var affiliate_id = Cookies.get("affwp_affiliate_id")
 
 
 

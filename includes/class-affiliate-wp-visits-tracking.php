@@ -49,13 +49,12 @@ class Affiliate_WP_Visits_Tracking {
 	/**
 	 * Load JS files
 	 *
-	 * @param integer $visit_id visit id.
 	 * @since 1.0
 	 */
-	public function load_scripts( $visit_id ) {
+	public function load_scripts() {
 
 		// return if no URL is set.
-		if ( ! $this->get_option( 'url' ) ) {
+		if ( ! $this->get_option( 'cdtawp_store_url' ) ) {
 			return;
 		}
 
@@ -66,9 +65,8 @@ class Affiliate_WP_Visits_Tracking {
 			'awp_track_visit_var',
 			array(
 
-				'referral_variable' => $this->get_option( 'referral_variable' ),
-				'url'               => $this->get_option( 'url' ),
-				'visit_id'          => $visit_id,
+				'referral_variable' => $this->get_option( 'cdtawp_referral_variable' ),
+				'url'               => $this->get_option( 'cdtawp_store_url' ),
 			)
 		);
 
@@ -81,12 +79,12 @@ class Affiliate_WP_Visits_Tracking {
 	 */
 	private function define_constants() {
 
-		$settings   = get_option( AWP_SETTINGS_GROUP );
+		$settings   = get_option( CDTAWP_SETTINGS_GROUP );
 		$public_key = '';
 		$token      = '';
-		if ( isset( $settings['public_key'] ) && isset( $settings['token'] ) ) {
-			$public_key = $settings['public_key'];
-			$token      = $settings['token'];
+		if ( isset( $settings['cdtawp_public_key'] ) && isset( $settings['cdtawp_token'] ) ) {
+			$public_key = $settings['cdtawp_public_key'];
+			$token      = $settings['cdtawp_token'];
 		}
 
 		define( 'AFFILIATE_WP_REST_UN', $public_key );
@@ -101,7 +99,7 @@ class Affiliate_WP_Visits_Tracking {
 	 * @since 1.0
 	 */
 	private function get_option( $option = '' ) {
-		$options = get_option( 'affiliatewp_external_referral_links' );
+		$options = get_option( CDTAWP_SETTINGS_GROUP );
 
 		if ( ! isset( $option ) ) {
 			return;
@@ -110,25 +108,48 @@ class Affiliate_WP_Visits_Tracking {
 		return $options[ $option ];
 	}
 
+	/**
+	 * Catch referral visit via ajax
+	 */
+	public function track_visit_receiver() {
+
+		$referral          = $this->get_option( 'cdtawp_referral_variable' );
+		$cookie_expiration = $this->get_option( 'cdtawp_cookie_expiration' );
+
+		$affiliate_id         = isset( $_GET[ $referral ] ) ? $_GET[ $referral ] : 0;
+		$affiliate_visited_id = isset( $_GET['visit'] ) ? $_GET['visit'] : 0;
+
+		if ( $affiliate_id && $affiliate_visited_id ) {
+			$visit_details = $this->get_visit( $affiliate_visited_id );
+			if ( isset( $visit_details->affiliate_id ) && $visit_details->affiliate_id == $affiliate_id ) {
+				setcookie( 'affwp_ref', $affiliate_id, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
+				setcookie( 'affwp_ref_visit_id', $affiliate_visited_id, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
+			}
+		}
+
+	}
 
 	/**
 	 * Record referral visit via ajax
 	 *
 	 * @since 1.0
 	 */
-	public function track_visit() {
+	public function track_visit_sender() {
 
-		$settings = get_option( AWP_SETTINGS_GROUP );
-		if ( ! isset( $settings['referral_credit_last'] ) && isset( $_COOKIE['affwp_visit_id'] ) && isset( $_COOKIE['affwp_affiliate_id'] ) ) {
+		$settings = get_option( CDTAWP_SETTINGS_GROUP );
+
+		if ( ! isset( $settings['cdtawp_referral_credit_last'] ) && isset( $_COOKIE['affwp_visit_id'] ) && isset( $_COOKIE['affwp_affiliate_id'] ) ) {
 			return;
 		}
 
-		$affiliate_id        = isset( $_GET[ $this->referral_variable ] ) ? absint( $_GET[ $this->referral_variable ] ) : 0;
+		$ref_var = $this->get_option( 'cdtawp_referral_variable' );
+
+		$affiliate_id        = isset( $_GET[ $ref_var ] ) ? absint( $_GET[ $ref_var ] ) : 0;
 		$cookie_affiliate_id = isset( $_COOKIE['affwp_affiliate_id'] ) ? absint( $_COOKIE['affwp_affiliate_id'] ) : 0;
 
 		if ( $affiliate_id !== $cookie_affiliate_id && $affiliate_id ) {
 			$campaign     = isset( $_GET['campaign'] ) ? sanitize_text_field( $_GET['campaign'] ) : '';
-			$landing_page = $this->get_option( 'url' );
+			$landing_page = $this->get_option( 'cdtawp_store_url' );
 			$store_url    = $landing_page . '/wp-json/affwp/v1/visits';
 			$referrer     = ! empty( $_SERVER['HTTP_REFERER'] ) ? esc_url( $_SERVER['HTTP_REFERER'] ) : '';
 
@@ -161,9 +182,8 @@ class Affiliate_WP_Visits_Tracking {
 
 			if ( ! is_wp_error( $response ) && ( 201 == $code || 200 == $code ) ) {
 				$body        = json_decode( wp_remote_retrieve_body( $response ) );
-				$cookie_time = '+' . $this->get_option( 'cookie_expiration' ) . ' day';
+				$cookie_time = '+' . $this->get_option( 'cdtawp_cookie_expiration' ) . ' day';
 				setcookie( 'affwp_affiliate_id', $affiliate_id, strtotime( $cookie_time ), '/' );
-				setcookie( 'affwp_erl_id', $affiliate_id, strtotime( $cookie_time ), '/' );
 				setcookie( 'affwp_visit_id', $body->visit_id, strtotime( $cookie_time ), '/' );
 			}
 		}

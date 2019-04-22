@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: AffiliateWP - Track External visits.
+ * Plugin Name: Cross Domain Tracker for AffiliateWP
  * Plugin URI:
  * Description: Allows you to track external visits.
  * Author: BSF
