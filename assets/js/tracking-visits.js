@@ -22,7 +22,11 @@ jQuery(document).ready(
         var campaign_cookie = getCookie("affwp_campaign")
 
         if ( affiliate_id ) {
-            var url = awp_track_visit_var.url, target_urls = $("a[href^='" + url + "']");
+            var url = awp_track_visit_var.url;
+	            if(url.substr(-1) == '/') {
+		            url = url.substr(0, url.length - 1);
+	        }
+	        target_urls = $("a[href^='" + url + "']");
             var referral_variable = awp_track_visit_var.referral_variable;
             $(target_urls).each(
                 function () {

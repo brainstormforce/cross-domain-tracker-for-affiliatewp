@@ -157,6 +157,9 @@ class Affiliate_WP_Visits_Tracking {
 		$ref_var = $this->get_option( 'cdtawp_referral_variable' );
 
 		$affiliate_id = isset( $_GET[ $ref_var ] ) ? absint( $_GET[ $ref_var ] ) : 0;
+		if (!$affiliate_id) {
+			return;
+		}
 		$campaign     = isset( $_GET['campaign'] ) ? sanitize_text_field( $_GET['campaign'] ) : '';
 
 		$cookie_affiliate_id   = isset( $_COOKIE['affwp_affiliate_id'] ) ? absint( $_COOKIE['affwp_affiliate_id'] ) : 0;
@@ -165,13 +168,13 @@ class Affiliate_WP_Visits_Tracking {
 		$cookie_time = '+' . $this->get_option( 'cdtawp_cookie_expiration' ) . ' day';
 		setcookie( 'affwp_affiliate_id', $affiliate_id, strtotime( $cookie_time ), '/' );
 
-		if ( ! $cookie_affwp_campaign ) {
+		if ( ! $cookie_affwp_campaign && isset($_GET['campaign']) ) {
 			setcookie( 'affwp_campaign', $campaign, strtotime( $cookie_time ), '/' );
 		}
 
 		if ( $affiliate_id !== $cookie_affiliate_id && $affiliate_id ) {
 
-			if ( ! isset( $settings['cdtawp_referral_credit_last'] ) ) {
+			if ( ! isset( $settings['cdtawp_referral_credit_last'] ) && $cookie_affiliate_id ) {
 				setcookie( 'affwp_affiliate_id', $cookie_affiliate_id, strtotime( $cookie_time ), '/' );
 			}
 			setcookie( 'affwp_campaign', $campaign, strtotime( $cookie_time ), '/' );
