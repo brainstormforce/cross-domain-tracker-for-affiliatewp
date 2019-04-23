@@ -291,14 +291,14 @@ final class Affiliate_WP_Track_External_Visits {
 			array(
 				'name'        => 'cdtawp_referral_credit_last',
 				'id'          => 'cdtawp_referral_credit_last',
-				'description' => __( 'Credit the last affiliate who referred the customer.', 'affiliatewp-external-visits' ),
+				'description' => __( 'Credit the last affiliate who referred the customer.<br/><br/><br/>', 'affiliatewp-external-visits' ),
 			)
 		);
 
 		// Child plugin settings.
 		add_settings_section(
 			CDTAWP_CONNECTION_SECTION,
-			__( 'Connect with AffiliateWP', 'affiliatewp-external-visits' ),
+			__( 'Authenticate with AffiliateWP', 'affiliatewp-external-visits' ),
 			array( $this, 'cdtawp_connection_section_callback' ),
 			CDTAWP_PAGE
 		);
@@ -312,7 +312,7 @@ final class Affiliate_WP_Track_External_Visits {
 			array(
 				'name'        => 'cdtawp_public_key',
 				'id'          => 'cdtawp_public_key',
-				'description' => __( 'Generate API key and copy/paste public key from your store where AffiliateWP is installed!', 'affiliatewp-external-visits' ),
+				'description' => '',
 			)
 		);
 
@@ -325,7 +325,7 @@ final class Affiliate_WP_Track_External_Visits {
 			array(
 				'name'        => 'cdtawp_token',
 				'id'          => 'cdtawp_token',
-				'description' => __( 'Generate API key and copy/paste token from your store where AffiliateWP is installed!', 'affiliatewp-external-visits' ),
+				'description' => '',
 			)
 		);
 
@@ -351,7 +351,12 @@ final class Affiliate_WP_Track_External_Visits {
 	 * @since 1.0.0
 	 */
 	public function cdtawp_connection_section_callback() {
-		echo "<p> To enable tracking of site visits, you need to authenticate AffiliateWP with this website. <br/>Please read <a target='_blank' href='https://docs.affiliatewp.com/article/1453-rest-api-authentication'>this article</a> to obtain API keys from AffiliateWP.</p>";
+
+	    $affiliate_api_link = $this->get_option('cdtawp_store_url') ;
+		$affiliate_api_link = $affiliate_api_link ? "<i>( " . $affiliate_api_link . " )</i>" : '';
+
+		echo "<p> To enable tracking of site visits, you need to authenticate with parent website ". $affiliate_api_link ." where AffiliateWP is installed.  <br/>Please read <a target='_blank' href='https://docs.affiliatewp.com/article/1453-rest-api-authentication'>this article</a> to obtain API keys from parent website.";
+	    echo "<br><br>After a successful authentication, you need to install & activate the <a target='_blank' href='https://affiliatewp.com/add-ons/pro/rest-api-extended/'>REST API Extended</a> plugin on parent website. <br> And enable <a target='_blank' href='https://cl.ly/fbdd25/Image%202019-04-23%20at%204.38.16%20PM.png'>Create Visit Endpoints</a> option from <i>AffiliateWP -> Settings -> REST AP</i>. </p>";
 	}
 
 
@@ -474,9 +479,9 @@ final class Affiliate_WP_Track_External_Visits {
 
 		?>
 		<input <?php echo $value ? 'checked' : ''; ?> type="checkbox" id="<?php echo $args['id']; ?>" name="<?php echo CDTAWP_SETTINGS_GROUP; ?>[<?php echo $args['name']; ?>]" value="<?php echo $value; ?>"/>
-
+		<?php echo $args['description']; ?>
 		<?php if ( isset( $args['description'] ) ) : ?>
-		<p class="description"><?php echo $args['description']; ?></p>
+		<p class="description"></p>
 		<?php endif; ?>
 		<?php
 

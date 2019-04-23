@@ -1,4 +1,4 @@
-Cross Domain Tracker for AffiliateWP
+## Cross Domain Tracker for AffiliateWP
 
 The official AffiliateWP – External Referral Links add-on is excellent for tracking referrals from different domains. But it has some limitations.
 
@@ -7,10 +7,10 @@ It does not have Credit Last Referrer option — which means, you can only have 
 
 So we developed this plugin which mainly fixes these two problems. Here is how it works:
 
-Install this plugin on main website where you have AffiliateWP plugin installed and where conversions take place (SiteA.com)
-Install this plugin on marketing website as well, where your affiliates send traffic (SiteB.com)
-Link and authenticate these two instances (SiteA.com and SiteB.com) using Public Key & Token.
-
+```
+1. Install this plugin on main website where you have AffiliateWP plugin installed and where conversions take place (SiteA.com)
+2. Install this plugin on marketing website as well, where your affiliates send traffic (SiteB.com)
+3. Link and authenticate these two instances (SiteA.com and SiteB.com) using Public Key & Token.
 And you are all set. 
-
+```
 Your affiliates can now start sending traffic to your marketing website (SiteB.com) and still see all the statistics and reports in their AffiliateWP dashboard.
