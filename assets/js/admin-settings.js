@@ -1,10 +1,7 @@
 jQuery(document).ready(
     function ($) {
-        
     	
         $('#cdtawp_plugin_type').change(
-        	
-       
         	
             function () {
 	            $("#connection_msg").text('');
