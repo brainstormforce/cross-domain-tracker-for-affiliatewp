@@ -156,11 +156,26 @@ class Affiliate_WP_Visits_Tracking {
 
 		$ref_var = $this->get_option( 'cdtawp_referral_variable' );
 
-		$affiliate_id        = isset( $_GET[ $ref_var ] ) ? absint( $_GET[ $ref_var ] ) : 0;
-		$cookie_affiliate_id = isset( $_COOKIE['affwp_affiliate_id'] ) ? absint( $_COOKIE['affwp_affiliate_id'] ) : 0;
+		$affiliate_id = isset( $_GET[ $ref_var ] ) ? absint( $_GET[ $ref_var ] ) : 0;
+		$campaign     = isset( $_GET['campaign'] ) ? sanitize_text_field( $_GET['campaign'] ) : '';
+
+		$cookie_affiliate_id   = isset( $_COOKIE['affwp_affiliate_id'] ) ? absint( $_COOKIE['affwp_affiliate_id'] ) : 0;
+		$cookie_affwp_campaign = isset( $_COOKIE['affwp_campaign'] ) ? $_COOKIE['affwp_campaign'] : 0;
+
+		$cookie_time = '+' . $this->get_option( 'cdtawp_cookie_expiration' ) . ' day';
+		setcookie( 'affwp_affiliate_id', $affiliate_id, strtotime( $cookie_time ), '/' );
+
+		if ( ! $cookie_affwp_campaign ) {
+			setcookie( 'affwp_campaign', $campaign, strtotime( $cookie_time ), '/' );
+		}
 
 		if ( $affiliate_id !== $cookie_affiliate_id && $affiliate_id ) {
-			$campaign     = isset( $_GET['campaign'] ) ? sanitize_text_field( $_GET['campaign'] ) : '';
+
+			if ( ! isset( $settings['cdtawp_referral_credit_last'] ) ) {
+				setcookie( 'affwp_affiliate_id', $cookie_affiliate_id, strtotime( $cookie_time ), '/' );
+			}
+			setcookie( 'affwp_campaign', $campaign, strtotime( $cookie_time ), '/' );
+
 			$landing_page = $this->get_option( 'cdtawp_store_url' );
 			$store_url    = $landing_page . '/wp-json/affwp/v1/visits';
 			$referrer     = ! empty( $_SERVER['HTTP_REFERER'] ) ? esc_url( $_SERVER['HTTP_REFERER'] ) : '';
@@ -193,9 +208,7 @@ class Affiliate_WP_Visits_Tracking {
 			$code     = wp_remote_retrieve_response_code( $response );
 
 			if ( ! is_wp_error( $response ) && ( 201 == $code || 200 == $code ) ) {
-				$body        = json_decode( wp_remote_retrieve_body( $response ) );
-				$cookie_time = '+' . $this->get_option( 'cdtawp_cookie_expiration' ) . ' day';
-				setcookie( 'affwp_affiliate_id', $affiliate_id, strtotime( $cookie_time ), '/' );
+				$body = json_decode( wp_remote_retrieve_body( $response ) );
 				setcookie( 'affwp_visit_id', $body->visit_id, strtotime( $cookie_time ), '/' );
 			}
 		}

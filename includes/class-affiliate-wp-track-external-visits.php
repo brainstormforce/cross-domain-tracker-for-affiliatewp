@@ -52,7 +52,7 @@ final class Affiliate_WP_Track_External_Visits {
 
 		add_action( 'admin_init', array( $this, 'add_style_scripts' ) );
 
-		add_action( 'admin_notices', array( $this, 'check_store_connection' ) );
+		add_action( 'wp_ajax_cdtawp_check_connection', array( $this, 'check_store_connection' ) );
 
 		add_filter( 'plugin_action_links_' . plugin_basename( AFILIATE_WP_EXTERNAL_VISITS_FILE ), array( $this, 'add_action_links' ) );
 
@@ -96,13 +96,16 @@ final class Affiliate_WP_Track_External_Visits {
 	 */
 	public function check_store_connection() {
 
-		$plugin_type = $this->get_option( 'cdtawp_plugin_type' );
-		if ( ( ! isset( $_GET['page'] ) || CDTAWP_PAGE != $_GET['page'] ) || ( CDTAWP_PLUGIN_CHILD != $plugin_type || ! is_admin() ) ) {
-			return;
+		$plugin_type = isset( $_POST['plugin_type'] ) ? $_POST['plugin_type'] : '';
+		if ( CDTAWP_PLUGIN_CHILD != $plugin_type ) {
+			wp_send_json_error();
 		}
 
-		$landing_page = $this->get_option( 'cdtawp_store_url' );
+		$landing_page = isset( $_POST['store_url'] ) ? $_POST['store_url'] : '';
 		$store_url    = $landing_page . '/wp-json/affwp/v1/visits';
+
+		$public_key = isset( $_POST['public_key'] ) ? $_POST['public_key'] : '';
+		$token      = isset( $_POST['token'] ) ? $_POST['token'] : '';
 
 		$pload = array(
 			'method'      => 'GET',
@@ -111,7 +114,7 @@ final class Affiliate_WP_Track_External_Visits {
 			'httpversion' => '1.0',
 			'blocking'    => true,
 			'headers'     => array(
-				'Authorization' => 'Basic ' . base64_encode( AFFILIATE_WP_REST_UN . ':' . AFFILIATE_WP_REST_PWD ),
+				'Authorization' => 'Basic ' . base64_encode( $public_key . ':' . $token ),
 			),
 			'body'        => '',
 			'cookies'     => array(),
@@ -121,14 +124,9 @@ final class Affiliate_WP_Track_External_Visits {
 		$code     = wp_remote_retrieve_response_code( $response );
 
 		if ( 200 != $code && 201 != $code ) {
-			$class   = 'notice notice-warning is-dismissible';
-			$message = __( 'Please update & verify your settings to connect with store!', 'affiliatewp-external-visits' );
-			printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+			wp_send_json_error();
 		} else {
-
-			$class   = 'notice notice-success is-dismissible';
-			$message = __( 'Connected with store successfully!', 'affiliatewp-external-visits' );
-			printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+			wp_send_json_success();
 
 		}
 
@@ -142,6 +140,12 @@ final class Affiliate_WP_Track_External_Visits {
 	public function add_style_scripts() {
 		wp_enqueue_script( 'cdtawp-script', self::$plugin_url . 'assets/js/admin-settings.js', array( 'jquery' ), self::$version );
 
+		$localize = array(
+			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+			'ajax_nonce' => wp_create_nonce( 'cdtawp_check_connection_nonce' ),
+		);
+
+		wp_localize_script( 'cdtawp-script', 'cdtawp_vars', $localize );
 	}
 
 	/**
@@ -294,8 +298,8 @@ final class Affiliate_WP_Track_External_Visits {
 		// Child plugin settings.
 		add_settings_section(
 			CDTAWP_CONNECTION_SECTION,
-			__( 'Store Connection Settings', 'affiliatewp-external-visits' ),
-			array( $this, 'cdtawp_section_callback' ),
+			__( 'Connect with AffiliateWP', 'affiliatewp-external-visits' ),
+			array( $this, 'cdtawp_connection_section_callback' ),
 			CDTAWP_PAGE
 		);
 
@@ -339,6 +343,15 @@ final class Affiliate_WP_Track_External_Visits {
 	 * @since 1.0.0
 	 */
 	public function cdtawp_section_callback() {
+	}
+
+	/**
+	 * Callback for cart abandonment options.
+	 *
+	 * @since 1.0.0
+	 */
+	public function cdtawp_connection_section_callback() {
+		echo "<p> To enable tracking of site visits, you need to authenticate AffiliateWP with this website. <br/>Please read <a target='_blank' href='https://docs.affiliatewp.com/article/1453-rest-api-authentication'>this article</a> to obtain API keys from AffiliateWP.</p>";
 	}
 
 

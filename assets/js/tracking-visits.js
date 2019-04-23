@@ -19,13 +19,22 @@ jQuery(document).ready(
     	
         var visited_cookie = getCookie("affwp_visit_id");
         var affiliate_id = getCookie("affwp_affiliate_id")
+        var campaign_cookie = getCookie("affwp_campaign")
 
-        if (visited_cookie ) {
+        if ( affiliate_id ) {
             var url = awp_track_visit_var.url, target_urls = $("a[href^='" + url + "']");
             var referral_variable = awp_track_visit_var.referral_variable;
             $(target_urls).each(
                 function () {
-                    current_url = $(this).attr("href"), $(this).attr("href", updateQueryStringParameter(current_url, referral_variable, affiliate_id) + "&visit=" + visited_cookie);
+                    current_url = $(this).attr("href");
+	                current_url = updateQueryStringParameter(current_url, referral_variable, affiliate_id);
+	                if ( visited_cookie ) {
+		                current_url = current_url + "&visit=" + visited_cookie;
+	                }
+	                if ( campaign_cookie ) {
+		                current_url = current_url + "&campaign=" + campaign_cookie;
+	                }
+                    $(this).attr("href", current_url );
                 }
             );
         }
