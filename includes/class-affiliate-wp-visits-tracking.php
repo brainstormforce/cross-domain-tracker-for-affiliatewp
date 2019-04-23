@@ -138,7 +138,7 @@ class Affiliate_WP_Visits_Tracking {
 	public function get_visit( $visit_id ) {
 		global $wpdb;
 		$visits_table = $wpdb->prefix . 'affiliate_wp_visits';
-		return $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM '.$visits_table.' WHERE visit_id = %s LIMIT 1;', $visit_id ) );
+		return $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . $visits_table . ' WHERE visit_id = %s LIMIT 1;', $visit_id ) );
 	}
 
 	/**

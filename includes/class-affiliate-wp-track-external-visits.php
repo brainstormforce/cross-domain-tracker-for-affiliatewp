@@ -54,6 +54,22 @@ final class Affiliate_WP_Track_External_Visits {
 
 		add_action( 'admin_notices', array( $this, 'check_store_connection' ) );
 
+		add_filter( 'plugin_action_links_' . plugin_basename( AFILIATE_WP_EXTERNAL_VISITS_FILE ), array( $this, 'add_action_links' ) );
+
+	}
+
+	/**
+	 *  Show actions on the plugin page.
+	 *
+	 * @param array $links links.
+	 * @return array
+	 */
+	function add_action_links( $links ) {
+
+		$mylinks = array(
+			'<a href="' . admin_url( 'options-general.php?page=external-visits' ) . '">Settings</a>',
+		);
+		return array_merge( $links, $mylinks );
 	}
 
 	/**
@@ -80,10 +96,8 @@ final class Affiliate_WP_Track_External_Visits {
 	 */
 	public function check_store_connection() {
 
-
-	    
 		$plugin_type = $this->get_option( 'cdtawp_plugin_type' );
-		if ( ( !isset($_GET['page']) || CDTAWP_PAGE != $_GET['page'] ) || (CDTAWP_PLUGIN_CHILD != $plugin_type || ! is_admin()) ) {
+		if ( ( ! isset( $_GET['page'] ) || CDTAWP_PAGE != $_GET['page'] ) || ( CDTAWP_PLUGIN_CHILD != $plugin_type || ! is_admin() ) ) {
 			return;
 		}
 
@@ -217,7 +231,7 @@ final class Affiliate_WP_Track_External_Visits {
 			array(
 				'name'        => 'cdtawp_plugin_type',
 				'id'          => 'cdtawp_plugin_type',
-				'description' => __( 'Parent must be activated on Store where AffiliateWP is installed. <br/> Child must be activated on the site where AffiliateWP – External Referral Links is installed.', 'affiliatewp-external-referral-links' ),
+				'description' => __( 'Parent - Select this option on the main website where you have AffiliateWP plugin installed and where conversions take place. <br/> Child - Select this option on a marketing website where your affiliates send traffic. ', 'affiliatewp-external-referral-links' ),
 			)
 		);
 
@@ -542,4 +556,4 @@ final class Affiliate_WP_Track_External_Visits {
 function affiliate_wp_track_external_visits() {
 	return Affiliate_WP_Track_External_Visits::instance();
 }
-add_action( 'plugins_loaded', 'affiliate_wp_track_external_visits', 999 );
+add_action( 'plugins_loaded', 'affiliate_wp_track_external_visits', -1 );

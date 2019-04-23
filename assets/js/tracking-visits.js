@@ -1,11 +1,24 @@
 jQuery(document).ready(
     function ($) {
-
-
-        var visited_cookie = Cookies.get("affwp_visit_id");
-        var affiliate_id = Cookies.get("affwp_affiliate_id")
-
-
+    	
+	    function getCookie(cname) {
+		    var name = cname + "=";
+		    var decodedCookie = decodeURIComponent(document.cookie);
+		    var ca = decodedCookie.split(';');
+		    for(var i = 0; i <ca.length; i++) {
+			    var c = ca[i];
+			    while (c.charAt(0) == ' ') {
+				    c = c.substring(1);
+			    }
+			    if (c.indexOf(name) == 0) {
+				    return c.substring(name.length, c.length);
+			    }
+		    }
+		    return "";
+	    }
+    	
+        var visited_cookie = getCookie("affwp_visit_id");
+        var affiliate_id = getCookie("affwp_affiliate_id")
 
         if (visited_cookie ) {
             var url = awp_track_visit_var.url, target_urls = $("a[href^='" + url + "']");
