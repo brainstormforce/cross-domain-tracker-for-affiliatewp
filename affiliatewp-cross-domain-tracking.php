@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Cross Domain Tracker for AffiliateWP
  * Plugin URI:
- * Description: Allows you to track external visits.
+ * Description: Track referrals from different domains.
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
  * Version: 1.0.1
