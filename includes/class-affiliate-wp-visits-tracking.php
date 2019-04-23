@@ -130,6 +130,18 @@ class Affiliate_WP_Visits_Tracking {
 	}
 
 	/**
+	 * Retrieves a row from the database based on a given row ID.
+	 *
+	 * @param  int $visit_id Row ID.
+	 * @return array|null|object|void
+	 */
+	public function get_visit( $visit_id ) {
+		global $wpdb;
+		$visits_table = $wpdb->prefix . 'affiliate_wp_visits';
+		return $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM '.$visits_table.' WHERE visit_id = %s LIMIT 1;', $visit_id ) );
+	}
+
+	/**
 	 * Record referral visit via ajax
 	 *
 	 * @since 1.0
