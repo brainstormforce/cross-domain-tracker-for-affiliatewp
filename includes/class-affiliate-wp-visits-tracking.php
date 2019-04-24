@@ -142,6 +142,23 @@ class Affiliate_WP_Visits_Tracking {
 	}
 
 	/**
+	 * Get the current page URL.
+	 *
+	 * @return string
+	 */
+	function current_location() {
+		if ( isset( $_SERVER['HTTPS'] ) &&
+			( 'on' == $_SERVER['HTTPS'] || 1 == $_SERVER['HTTPS'] ) ||
+			isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) &&
+			'https' == $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
+			$protocol = 'https://';
+		} else {
+			$protocol = 'http://';
+		}
+		return $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	}
+
+	/**
 	 * Record referral visit via ajax
 	 *
 	 * @since 1.0
@@ -149,18 +166,15 @@ class Affiliate_WP_Visits_Tracking {
 	public function track_visit_sender() {
 
 		$settings = get_option( CDTAWP_SETTINGS_GROUP );
-
-		if ( ! isset( $settings['cdtawp_referral_credit_last'] ) && isset( $_COOKIE['affwp_visit_id'] ) && isset( $_COOKIE['affwp_affiliate_id'] ) ) {
-			return;
-		}
-
-		$ref_var = $this->get_option( 'cdtawp_referral_variable' );
+		$ref_var  = $this->get_option( 'cdtawp_referral_variable' );
 
 		$affiliate_id = isset( $_GET[ $ref_var ] ) ? absint( $_GET[ $ref_var ] ) : 0;
-		if (!$affiliate_id) {
+
+		if ( ! $affiliate_id || ( ! isset( $settings['cdtawp_referral_credit_last'] ) && isset( $_COOKIE['affwp_visit_id'] ) && isset( $_COOKIE['affwp_affiliate_id'] ) ) ) {
 			return;
 		}
-		$campaign     = isset( $_GET['campaign'] ) ? sanitize_text_field( $_GET['campaign'] ) : '';
+
+		$campaign = isset( $_GET['campaign'] ) ? sanitize_text_field( $_GET['campaign'] ) : '';
 
 		$cookie_affiliate_id   = isset( $_COOKIE['affwp_affiliate_id'] ) ? absint( $_COOKIE['affwp_affiliate_id'] ) : 0;
 		$cookie_affwp_campaign = isset( $_COOKIE['affwp_campaign'] ) ? $_COOKIE['affwp_campaign'] : 0;
@@ -168,7 +182,7 @@ class Affiliate_WP_Visits_Tracking {
 		$cookie_time = '+' . $this->get_option( 'cdtawp_cookie_expiration' ) . ' day';
 		setcookie( 'affwp_affiliate_id', $affiliate_id, strtotime( $cookie_time ), '/' );
 
-		if ( ! $cookie_affwp_campaign && isset($_GET['campaign']) ) {
+		if ( ! $cookie_affwp_campaign && isset( $_GET['campaign'] ) ) {
 			setcookie( 'affwp_campaign', $campaign, strtotime( $cookie_time ), '/' );
 		}
 
@@ -178,10 +192,10 @@ class Affiliate_WP_Visits_Tracking {
 				setcookie( 'affwp_affiliate_id', $cookie_affiliate_id, strtotime( $cookie_time ), '/' );
 			}
 			setcookie( 'affwp_campaign', $campaign, strtotime( $cookie_time ), '/' );
-
-			$landing_page = $this->get_option( 'cdtawp_store_url' );
-			$store_url    = $landing_page . '/wp-json/affwp/v1/visits';
-			$referrer     = ! empty( $_SERVER['HTTP_REFERER'] ) ? esc_url( $_SERVER['HTTP_REFERER'] ) : '';
+			$current_page_url = explode( '?', $this->current_location() );
+			$landing_page     = $current_page_url[0];
+			$store_url        = $this->get_option( 'cdtawp_store_url' ) . '/wp-json/affwp/v1/visits';
+			$referrer         = ! empty( $_SERVER['HTTP_REFERER'] ) ? esc_url( $_SERVER['HTTP_REFERER'] ) : '';
 
 			$pload = array(
 				'method'      => 'POST',

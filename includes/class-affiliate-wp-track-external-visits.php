@@ -352,11 +352,11 @@ final class Affiliate_WP_Track_External_Visits {
 	 */
 	public function cdtawp_connection_section_callback() {
 
-	    $affiliate_api_link = $this->get_option('cdtawp_store_url') ;
-		$affiliate_api_link = $affiliate_api_link ? "<i>( " . $affiliate_api_link . " )</i>" : '';
+		$affiliate_api_link = $this->get_option( 'cdtawp_store_url' );
+		$affiliate_api_link = $affiliate_api_link ? '<i>( ' . $affiliate_api_link . ' )</i>' : '';
 
-		echo "<p> To enable tracking of site visits, you need to authenticate with parent website ". $affiliate_api_link ." where AffiliateWP is installed.  <br/>Please read <a target='_blank' href='https://docs.affiliatewp.com/article/1453-rest-api-authentication'>this article</a> to obtain API keys from parent website.";
-	    echo "<br><br>After a successful authentication, you need to install & activate the <a target='_blank' href='https://affiliatewp.com/add-ons/pro/rest-api-extended/'>REST API Extended</a> plugin on parent website. <br> And enable <a target='_blank' href='https://cl.ly/fbdd25/Image%202019-04-23%20at%204.38.16%20PM.png'>Create Visit Endpoints</a> option from <i>AffiliateWP -> Settings -> REST AP</i>. </p>";
+		echo '<p> To enable tracking of site visits, you need to authenticate with parent website ' . $affiliate_api_link . " where AffiliateWP is installed.  <br/>Please read <a target='_blank' href='https://docs.affiliatewp.com/article/1453-rest-api-authentication'>this article</a> to obtain API keys from parent website.";
+		echo "<br><br>After a successful authentication, you need to install & activate the <a target='_blank' href='https://affiliatewp.com/add-ons/pro/rest-api-extended/'>REST API Extended</a> plugin on parent website. <br> And enable <a target='_blank' href='https://cl.ly/fbdd25/Image%202019-04-23%20at%204.38.16%20PM.png'>Create Visit Endpoints</a> option from <i>AffiliateWP -> Settings -> REST AP</i>. </p>";
 	}
 
 
