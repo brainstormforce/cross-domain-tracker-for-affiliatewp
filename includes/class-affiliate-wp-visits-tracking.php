@@ -58,7 +58,7 @@ class Affiliate_WP_Visits_Tracking {
 			return;
 		}
 
-		wp_enqueue_script( 'awp-track-visit', Affiliate_WP_Track_External_Visits::$plugin_url . 'assets/js/tracking-visits.js', array( 'jquery' ), Affiliate_WP_Track_External_Visits::$version );
+		wp_enqueue_script( 'awp-track-visit', Affiliate_WP_Track_External_Visits::$plugin_url . 'assets/js/tracking-visits.js', array( 'jquery' ), CDTAWP_VERSION );
 
 		wp_localize_script(
 			'awp-track-visit',

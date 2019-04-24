@@ -32,12 +32,6 @@ final class Affiliate_WP_Track_External_Visits {
 	 */
 	public static $plugin_url;
 
-	/**
-	 *  Version of plugin.
-	 *
-	 * @var version.
-	 */
-	public static $version;
 
 	/**
 	 * Get things started
@@ -143,7 +137,7 @@ final class Affiliate_WP_Track_External_Visits {
 			return;
 		}
 
-		wp_enqueue_script( 'cdtawp-script', self::$plugin_url . 'assets/js/admin-settings.js', array( 'jquery' ), self::$version );
+		wp_enqueue_script( 'cdtawp-script', self::$plugin_url . 'assets/js/admin-settings.js', array( 'jquery' ), CDTAWP_VERSION);
 
 		$localize = array(
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
@@ -167,6 +161,8 @@ final class Affiliate_WP_Track_External_Visits {
 		define( 'CDTAWP_PLUGIN_CHILD', 'Child' );
 		define( 'CDTAWP_PLUGIN_PARENT', 'Parent' );
 
+
+		define('CDTAWP_VERSION', '1.0.0');
 	}
 
 	/**
@@ -526,7 +522,6 @@ final class Affiliate_WP_Track_External_Visits {
 			self::$plugin_url = plugin_dir_url( AFILIATE_WP_EXTERNAL_VISITS_FILE );
 
 			self::$instance = new Affiliate_WP_Track_External_Visits();
-			self::$version  = '1.0.0';
 			self::$instance->includes();
 		}
 
