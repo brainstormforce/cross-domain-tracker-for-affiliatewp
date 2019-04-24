@@ -138,6 +138,11 @@ final class Affiliate_WP_Track_External_Visits {
 	 * @since 1.0.0
 	 */
 	public function add_style_scripts() {
+
+		if ( ! ( isset( $_GET['page'] ) && CDTAWP_PAGE == $_GET['page'] ) ) {
+			return;
+		}
+
 		wp_enqueue_script( 'cdtawp-script', self::$plugin_url . 'assets/js/admin-settings.js', array( 'jquery' ), self::$version );
 
 		$localize = array(
@@ -262,7 +267,7 @@ final class Affiliate_WP_Track_External_Visits {
 			CDTAWP_SECTION,
 			array(
 				'name'        => 'cdtawp_referral_variable',
-				'id'          => 'cdtawp_referral-variable',
+				'id'          => 'cdtawp_referral_variable',
 				'description' => __( 'The referral variable you have set in AffiliateWP at the site URL above. It must match exactly.', 'affiliatewp-external-referral-links' ),
 			)
 		);
@@ -329,6 +334,13 @@ final class Affiliate_WP_Track_External_Visits {
 			)
 		);
 
+		add_settings_section(
+			'AffiliateWP Connection',
+			'',
+			array( $this, 'cdtawp_section_callback_btn' ),
+			CDTAWP_PAGE
+		);
+
 		register_setting(
 			CDTAWP_SETTINGS_GROUP,
 			CDTAWP_SETTINGS_GROUP
@@ -350,12 +362,21 @@ final class Affiliate_WP_Track_External_Visits {
 	 *
 	 * @since 1.0.0
 	 */
+	public function cdtawp_section_callback_btn() {
+		echo '<input type="button" name="check_store_connection" id="check_store_connection" class="button button-secondary button-small cdtawp-updating-message" value="Authenticate with AffiliateWP"><span style="margin-left: 5px" id="connection_msg"></span>';
+	}
+
+	/**
+	 * Callback for cart abandonment options.
+	 *
+	 * @since 1.0.0
+	 */
 	public function cdtawp_connection_section_callback() {
 
 		$affiliate_api_link = $this->get_option( 'cdtawp_store_url' );
 		$affiliate_api_link = $affiliate_api_link ? '<i>( ' . $affiliate_api_link . ' )</i>' : '';
 
-		echo '<p> To enable tracking of site visits, you need to authenticate with parent website ' . $affiliate_api_link . " where AffiliateWP is installed.  <br/>Please read <a target='_blank' href='https://docs.affiliatewp.com/article/1453-rest-api-authentication'>this article</a> to obtain API keys from parent website.";
+		echo '<p id="cdtawp_auth_desc"> To enable tracking of site visits, you need to authenticate with parent website ' . $affiliate_api_link . " where AffiliateWP is installed.  <br/>Please read <a target='_blank' href='https://docs.affiliatewp.com/article/1453-rest-api-authentication'>this article</a> to obtain API keys from parent website.";
 		echo "<br><br>After a successful authentication, you need to install & activate the <a target='_blank' href='https://affiliatewp.com/add-ons/pro/rest-api-extended/'>REST API Extended</a> plugin on parent website. <br> And enable <a target='_blank' href='https://cl.ly/fbdd25/Image%202019-04-23%20at%204.38.16%20PM.png'>Create Visit Endpoints</a> option from <i>AffiliateWP -> Settings -> REST AP</i>. </p>";
 	}
 

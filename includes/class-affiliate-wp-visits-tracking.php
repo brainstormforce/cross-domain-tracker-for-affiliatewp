@@ -113,8 +113,9 @@ class Affiliate_WP_Visits_Tracking {
 	 */
 	public function track_visit_receiver() {
 
-		$referral          = $this->get_option( 'cdtawp_referral_variable' );
-		$cookie_expiration = $this->get_option( 'cdtawp_cookie_expiration' );
+		$affwp_settings    = get_option( 'affwp_settings' );
+		$referral          = isset( $affwp_settings['referral_var'] ) ? $affwp_settings['referral_var'] : '';
+		$cookie_expiration = isset( $affwp_settings['cookie_exp'] ) ? $affwp_settings['cookie_exp'] : 0;
 
 		$affiliate_id         = isset( $_GET[ $referral ] ) ? $_GET[ $referral ] : 0;
 		$affiliate_visited_id = isset( $_GET['visit'] ) ? $_GET['visit'] : 0;
