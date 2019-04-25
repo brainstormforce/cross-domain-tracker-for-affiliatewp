@@ -119,12 +119,16 @@ class Affiliate_WP_Visits_Tracking {
 
 		$affiliate_id         = isset( $_GET[ $referral ] ) ? $_GET[ $referral ] : 0;
 		$affiliate_visited_id = isset( $_GET['visit'] ) ? $_GET['visit'] : 0;
+		$affwp_campaign = isset( $_GET['campaign'] ) ? $_GET['campaign'] : '';
 
 		if ( $affiliate_id && $affiliate_visited_id ) {
 			$visit_details = $this->get_visit( $affiliate_visited_id );
 			if ( isset( $visit_details->affiliate_id ) && $visit_details->affiliate_id == $affiliate_id ) {
 				setcookie( 'affwp_ref', $affiliate_id, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
 				setcookie( 'affwp_ref_visit_id', $affiliate_visited_id, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
+			}
+			if ( $affwp_campaign ) {
+				setcookie( 'affwp_campaign', $affwp_campaign, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
 			}
 		}
 
