@@ -137,7 +137,7 @@ final class Affiliate_WP_Track_External_Visits {
 			return;
 		}
 
-		wp_enqueue_script( 'cdtawp-script', self::$plugin_url . 'assets/js/admin-settings.js', array( 'jquery' ), CDTAWP_VERSION);
+		wp_enqueue_script( 'cdtawp-script', self::$plugin_url . 'assets/js/admin-settings.js', array( 'jquery' ), CDTAWP_VERSION );
 
 		$localize = array(
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
@@ -161,8 +161,7 @@ final class Affiliate_WP_Track_External_Visits {
 		define( 'CDTAWP_PLUGIN_CHILD', 'Child' );
 		define( 'CDTAWP_PLUGIN_PARENT', 'Parent' );
 
-
-		define('CDTAWP_VERSION', '1.0.0');
+		define( 'CDTAWP_VERSION', '1.0.0' );
 	}
 
 	/**
@@ -187,24 +186,15 @@ final class Affiliate_WP_Track_External_Visits {
 	 */
 	public function admin_page_view_callback() {
 		?>
-
-
 		<div class="wrap">
-
-
-			<h2>
-		<?php _e( 'Cross Domain Tracker for AffiliateWP', 'affiliatewp-external-visits' ); ?>
-			</h2>
-
+			<h2> <?php _e( 'Cross Domain Tracker for AffiliateWP', 'affiliatewp-external-visits' ); ?> </h2>
 			<form action="options.php" method="POST">
-		<?php
-		settings_fields( CDTAWP_SETTINGS_GROUP );
-		do_settings_sections( CDTAWP_PAGE );
-		submit_button();
-		?>
-
+				<?php
+				settings_fields( CDTAWP_SETTINGS_GROUP );
+				do_settings_sections( CDTAWP_PAGE );
+				submit_button();
+				?>
 			</form>
-
 		</div>
 		<?php
 	}

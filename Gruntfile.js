@@ -35,48 +35,7 @@ module.exports = function(grunt) {
             }
         },
 
-        rtlcss: {
-            options: {
-                // rtlcss options
-                config: {
-                    preserveComments: true,
-                    greedy: true
-                },
-                // generate source maps
-                map: false
-            },
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: "admin/assets/css",
-                    src: [
-                        '*.css',
-                        '!*-rtl.css',
-                    ],
-                    dest: "admin/assets/css",
-                    ext: '-rtl.css'
-                },{
-                    expand: true,
-                    cwd: "admin/meta-assets/css",
-                    src: [
-                        '*.css',
-                        '!*-rtl.css',
-                    ],
-                    dest: "admin/meta-assets/css",
-                    ext: '-rtl.css'
-                },{
-                    expand: true,
-                    cwd: "assets/css",
-                    src: [
-                        '*.css',
-                        '!*-rtl.css',
-                    ],
-                    dest: "assets/css/",
-                    ext: '-rtl.css'
-                }]
-            }
-        },
-
+		
 		copy: {
 			main: {
 				options: {
@@ -193,23 +152,7 @@ module.exports = function(grunt) {
                 ]
             }
         },
-
-        /* Minify Js and Css */
-        cssmin: {
-            options: {
-                keepSpecialComments: 0
-            },
-            css: {
-                files: [{
-                    expand: true,
-                    cwd: "assets/css",
-                    src: ["*.css"],
-                    dest: "assets/min-css",
-                    ext: ".min.css",
-                }]
-            }
-        },
-
+		
         uglify: {
             js: {
                 options: {
@@ -229,37 +172,8 @@ module.exports = function(grunt) {
         }
 	});
 
-    // Update google Fonts
-    grunt.registerTask('google-fonts', function () {
-        var done = this.async();
-        var request = require('request');
-        var fs = require('fs');
-
-        request('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDu1nDK2o4FpxhrIlNXyPNckVW5YP9HRu8', function (error, response, body) {
-
-            if (response && response.statusCode == 200) {
-
-                var fonts = JSON.parse(body).items.map(function (font) {
-                    return {
-                        [font.family] : {
-                            'variants' : font.variants,
-                            'category' : font.category
-                        }
-                    };
-                })
-
-                fs.writeFile('classes/fields/typography/google-fonts.json', JSON.stringify(fonts, undefined, 4), function (err) {
-                    if (! err ) {
-                        console.log("Google Fonts Updated!");
-                    }
-                });
-            }
-
-        });
-    });
-
     // Load grunt tasks
-    grunt.loadNpmTasks('grunt-rtlcss');
+
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-clean');
@@ -272,10 +186,7 @@ module.exports = function(grunt) {
 
     // Autoprefix
     grunt.registerTask('style', ['postcss:style']);
-
-    // rtlcss, you will still need to install ruby and sass on your system manually to run this
-    grunt.registerTask('rtl', ['rtlcss']);
-	    grunt.registerTask('release', ['clean:zip', 'copy','compress','clean:main']);
+    grunt.registerTask('release', ['clean:zip', 'copy','compress','clean:main']);
     grunt.registerTask('i18n', ['addtextdomain', 'makepot']);
 
     // min all
