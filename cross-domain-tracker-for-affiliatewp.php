@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: AffiliateWP - Track External visits.
+ * Plugin Name: Cross Domain Tracker for AffiliateWP
  * Plugin URI:
- * Description: Allows you to track external visits.
- * Author: BSF
+ * Description: Track referrals from different domains.
+ * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
- * Version: 1.0.1
+ * Version: 1.0.0
  * Text Domain: affiliatewp-external-visits
  * Domain Path: languages
  * WC requires at least: 3.0

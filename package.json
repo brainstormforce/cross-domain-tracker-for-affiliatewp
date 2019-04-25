@@ -1,0 +1,35 @@
+{
+  "name": "cross-domain-tracker-for-affiliatewp",
+  "version": "1.0.0",
+  "description": "Track referrals from different domains.",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "test"
+  },
+  "dependencies": {
+    "grunt-bumpup": "^0.6.3",
+    "grunt-text-replace": "^0.4.0",
+    "moment-timezone": "^0.5.25",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.5.1",
+    "grunt": "^1.0.4",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-compress": "^1.4.3",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^3.0.0",
+    "grunt-contrib-uglify": "^4.0.0",
+    "grunt-postcss": "^0.9.0",
+    "grunt-rtlcss": "^2.0.1",
+    "grunt-wp-i18n": "^1.0.3",
+    "postcss-flexibility": "^2.0.0",
+    "shelljs": "~0.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:brainstormforce/cross-domain-tracker-for-affiliatewp.git"
+  },
+  "author": "Brainstorm Force",
+  "license": "ISC"
+}
