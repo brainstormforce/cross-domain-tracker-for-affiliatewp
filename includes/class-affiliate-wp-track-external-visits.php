@@ -187,6 +187,17 @@ final class Affiliate_WP_Track_External_Visits {
 	 * @since 1.0.0
 	 */
 	public function admin_page_view_callback() {
+
+		if ( CDTAWP_PLUGIN_PARENT === $this->get_option( 'cdtawp_plugin_type' ) ) {
+			if ( ! is_plugin_active( 'affiliate-wp/affiliate-wp.php' ) ) {
+				echo '<div class="error is-dismissible"><p>' . __( 'Please install/activate the <a target="_blank" href="https://affiliatewp.com/">AffiliateWP</a> plugin in order to use Cross Domain Tracker for AffiliateWP.', 'affiliatewp-rest-api-extended' ) . '</p></div>';
+			}
+
+			if ( ! is_plugin_active( 'affiliatewp-rest-api-extended/affiliatewp-rest-api-extended.php' ) ) {
+				echo '<div class="error is-dismissible"><p>' . __( 'Please install/activate the <a target="_blank" href="https://affiliatewp.com/add-ons/pro/rest-api-extended/">AffiliateWP REST API Extended</a> plugin in order to use Cross Domain Tracker for AffiliateWP.', 'affiliatewp-rest-api-extended' ) . '</p></div>';
+			}
+		}
+
 		?>
 		<div class="wrap">
 			<h2> <?php esc_attr_e( 'Cross Domain Tracker for AffiliateWP', 'affiliatewp-external-visits' ); ?> </h2>
