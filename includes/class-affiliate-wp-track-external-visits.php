@@ -10,7 +10,7 @@
  */
 final class Affiliate_WP_Track_External_Visits {
 
-
+    // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	/**
 	 * Instance object.
 	 *
@@ -58,7 +58,7 @@ final class Affiliate_WP_Track_External_Visits {
 	 * @param array $links links.
 	 * @return array
 	 */
-	function add_action_links( $links ) {
+	public function add_action_links( $links ) {
 
 		$mylinks = array(
 			'<a href="' . admin_url( 'options-general.php?page=external-visits' ) . '">Settings</a>',
@@ -90,8 +90,10 @@ final class Affiliate_WP_Track_External_Visits {
 	 */
 	public function check_store_connection() {
 
+		check_ajax_referer( 'cdtawp_check_connection_nonce', 'security' );
+
 		$plugin_type = isset( $_POST['plugin_type'] ) ? $_POST['plugin_type'] : '';
-		if ( CDTAWP_PLUGIN_CHILD != $plugin_type ) {
+		if ( CDTAWP_PLUGIN_CHILD !== $plugin_type ) {
 			wp_send_json_error();
 		}
 
@@ -108,7 +110,7 @@ final class Affiliate_WP_Track_External_Visits {
 			'httpversion' => '1.0',
 			'blocking'    => true,
 			'headers'     => array(
-				'Authorization' => 'Basic ' . base64_encode( $public_key . ':' . $token ),
+				'Authorization' => 'Basic ' . base64_encode( $public_key . ':' . $token ), // phpcs:ignore
 			),
 			'body'        => '',
 			'cookies'     => array(),
@@ -117,7 +119,7 @@ final class Affiliate_WP_Track_External_Visits {
 		$response = wp_remote_get( $store_url, $pload );
 		$code     = wp_remote_retrieve_response_code( $response );
 
-		if ( 200 != $code && 201 != $code ) {
+		if ( 200 !== $code && 201 !== $code ) {
 			wp_send_json_error();
 		} else {
 			wp_send_json_success();
@@ -133,11 +135,11 @@ final class Affiliate_WP_Track_External_Visits {
 	 */
 	public function add_style_scripts() {
 
-		if ( ! ( isset( $_GET['page'] ) && CDTAWP_PAGE == $_GET['page'] ) ) {
+		if ( ! ( isset( $_GET['page'] ) && CDTAWP_PAGE === $_GET['page'] ) ) { // phpcs:ignore
 			return;
 		}
 
-		wp_enqueue_script( 'cdtawp-script', self::$plugin_url . 'assets/js/admin-settings.js', array( 'jquery' ), CDTAWP_VERSION );
+		wp_enqueue_script( 'cdtawp-script', self::$plugin_url . 'assets/js/admin-settings.js', array( 'jquery' ), CDTAWP_VERSION, true );
 
 		$localize = array(
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
@@ -187,7 +189,7 @@ final class Affiliate_WP_Track_External_Visits {
 	public function admin_page_view_callback() {
 		?>
 		<div class="wrap">
-			<h2> <?php _e( 'Cross Domain Tracker for AffiliateWP', 'affiliatewp-external-visits' ); ?> </h2>
+			<h2> <?php esc_attr_e( 'Cross Domain Tracker for AffiliateWP', 'affiliatewp-external-visits' ); ?> </h2>
 			<form action="options.php" method="POST">
 				<?php
 				settings_fields( CDTAWP_SETTINGS_GROUP );
@@ -205,7 +207,7 @@ final class Affiliate_WP_Track_External_Visits {
 	 * @since 1.0.0
 	 */
 	public function settings() {
-		if ( false == get_option( CDTAWP_SETTINGS_GROUP ) ) {
+		if ( false === get_option( CDTAWP_SETTINGS_GROUP ) ) {
 			add_option( CDTAWP_SETTINGS_GROUP, $this->default_options() );
 		}
 
@@ -463,8 +465,8 @@ final class Affiliate_WP_Track_External_Visits {
 		?>
 
 		<select id="<?php echo $args['id']; ?>" name='<?php echo CDTAWP_SETTINGS_GROUP; ?>[<?php echo $args['name']; ?>]'>
-			<option value='<?php echo( CDTAWP_PLUGIN_CHILD ); ?>' <?php selected( $value, CDTAWP_PLUGIN_CHILD ); ?>> <?php _e( 'Child', 'affiliatewp-external-visits' ); ?> </option>
-			<option value='<?php echo( CDTAWP_PLUGIN_PARENT ); ?>' <?php selected( $value, CDTAWP_PLUGIN_PARENT ); ?>> <?php _e( 'Parent', 'affiliatewp-external-visits' ); ?>  </option>
+			<option value='<?php echo( CDTAWP_PLUGIN_CHILD ); ?>' <?php selected( $value, CDTAWP_PLUGIN_CHILD ); ?>> <?php esc_attr_e( 'Child', 'affiliatewp-external-visits' ); ?> </option>
+			<option value='<?php echo( CDTAWP_PLUGIN_PARENT ); ?>' <?php selected( $value, CDTAWP_PLUGIN_PARENT ); ?>> <?php esc_attr_e( 'Parent', 'affiliatewp-external-visits' ); ?>  </option>
 		</select>
 		<?php if ( isset( $args['description'] ) ) : ?>
 		<p class="description"><?php echo $args['description']; ?></p>
@@ -557,7 +559,7 @@ final class Affiliate_WP_Track_External_Visits {
 		$visit_tracking = new Affiliate_WP_Visits_Tracking();
 
 		if ( ! is_admin() ) {
-			if ( isset( $options['cdtawp_plugin_type'] ) && CDTAWP_PLUGIN_CHILD == $options['cdtawp_plugin_type'] ) {
+			if ( isset( $options['cdtawp_plugin_type'] ) && CDTAWP_PLUGIN_CHILD === $options['cdtawp_plugin_type'] ) {
 				// Child plugin send tracked visit.
 				$visit_tracking->track_visit_sender();
 			} else {
@@ -569,6 +571,7 @@ final class Affiliate_WP_Track_External_Visits {
 
 
 }
+// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
 /**
  * The main function responsible for returning the one true AffiliateWP_Track_External_Visits

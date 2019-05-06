@@ -36,7 +36,8 @@ jQuery(document).ready(
 				    store_url: $("#cdtawp_store_url").val(),
 				    public_key: $("#cdtawp_public_key").val(),
 		            token: $("#cdtawp_token").val(),
-				    plugin_type: $("#cdtawp_plugin_type").val()
+				    plugin_type: $("#cdtawp_plugin_type").val(),
+					security: cdtawp_vars.ajax_nonce
 			    },
 			    success: function(data) {
 			    	if( data.success ) {
