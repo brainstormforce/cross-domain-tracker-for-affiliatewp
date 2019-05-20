@@ -50,4 +50,4 @@ No, you just need to select the plugin type as parent/child inside the plugin se
 = Version 1.0.0 - Monday, 20th May 2019 =
 * Initial Release
 
- == Upgrade Notice ==
+== Upgrade Notice ==
