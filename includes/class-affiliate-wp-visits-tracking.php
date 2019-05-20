@@ -58,7 +58,7 @@ class Affiliate_WP_Visits_Tracking {
 			return;
 		}
 
-		wp_enqueue_script( 'awp-track-visit', Affiliate_WP_Track_External_Visits::$plugin_url . 'assets/js/tracking-visits.js', array( 'jquery' ), CDTAWP_VERSION );
+		wp_enqueue_script( 'awp-track-visit', Affiliate_WP_Track_External_Visits::$plugin_url . 'assets/js/tracking-visits.js', array( 'jquery' ), CDTAWP_VERSION, true );
 
 		wp_localize_script(
 			'awp-track-visit',
@@ -117,13 +117,15 @@ class Affiliate_WP_Visits_Tracking {
 		$referral          = isset( $affwp_settings['referral_var'] ) ? $affwp_settings['referral_var'] : '';
 		$cookie_expiration = isset( $affwp_settings['cookie_exp'] ) ? $affwp_settings['cookie_exp'] : 0;
 
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$affiliate_id         = isset( $_GET[ $referral ] ) ? $_GET[ $referral ] : 0;
 		$affiliate_visited_id = isset( $_GET['visit'] ) ? $_GET['visit'] : 0;
-		$affwp_campaign = isset( $_GET['campaign'] ) ? $_GET['campaign'] : '';
+		$affwp_campaign       = isset( $_GET['campaign'] ) ? $_GET['campaign'] : '';
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		if ( $affiliate_id && $affiliate_visited_id ) {
 			$visit_details = $this->get_visit( $affiliate_visited_id );
-			if ( isset( $visit_details->affiliate_id ) && $visit_details->affiliate_id == $affiliate_id ) {
+			if ( isset( $visit_details->affiliate_id ) && $visit_details->affiliate_id === $affiliate_id ) {
 				setcookie( 'affwp_ref', $affiliate_id, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
 				setcookie( 'affwp_ref_visit_id', $affiliate_visited_id, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
 			}
@@ -143,7 +145,7 @@ class Affiliate_WP_Visits_Tracking {
 	public function get_visit( $visit_id ) {
 		global $wpdb;
 		$visits_table = $wpdb->prefix . 'affiliate_wp_visits';
-		return $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . $visits_table . ' WHERE visit_id = %s LIMIT 1;', $visit_id ) );
+		return $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . $visits_table . ' WHERE visit_id = %s LIMIT 1;', $visit_id ) ); // phpcs:ignore
 	}
 
 	/**
@@ -151,11 +153,11 @@ class Affiliate_WP_Visits_Tracking {
 	 *
 	 * @return string
 	 */
-	function current_location() {
+	public function current_location() {
 		if ( isset( $_SERVER['HTTPS'] ) &&
-			( 'on' == $_SERVER['HTTPS'] || 1 == $_SERVER['HTTPS'] ) ||
+			( 'on' === $_SERVER['HTTPS'] || 1 === $_SERVER['HTTPS'] ) ||
 			isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) &&
-			'https' == $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
+			'https' === $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
 			$protocol = 'https://';
 		} else {
 			$protocol = 'http://';
@@ -173,7 +175,7 @@ class Affiliate_WP_Visits_Tracking {
 		$settings = get_option( CDTAWP_SETTINGS_GROUP );
 		$ref_var  = $this->get_option( 'cdtawp_referral_variable' );
 
-		$affiliate_id = isset( $_GET[ $ref_var ] ) ? absint( $_GET[ $ref_var ] ) : 0;
+		$affiliate_id = isset( $_GET[ $ref_var ] ) ? absint( $_GET[ $ref_var ] ) : 0; // phpcs:disable WordPress.Security.NonceVerification.Recommended
 
 		if ( ! $affiliate_id || ( ! isset( $settings['cdtawp_referral_credit_last'] ) && isset( $_COOKIE['affwp_visit_id'] ) && isset( $_COOKIE['affwp_affiliate_id'] ) ) ) {
 			return;
@@ -209,7 +211,7 @@ class Affiliate_WP_Visits_Tracking {
 				'httpversion' => '1.0',
 				'blocking'    => true,
 				'headers'     => array(
-					'Authorization' => 'Basic ' . base64_encode( AFFILIATE_WP_REST_UN . ':' . AFFILIATE_WP_REST_PWD ),
+					'Authorization' => 'Basic ' . base64_encode( AFFILIATE_WP_REST_UN . ':' . AFFILIATE_WP_REST_PWD ), // phpcs:ignore
 				),
 				'body'        => '',
 				'cookies'     => array(),
@@ -229,7 +231,7 @@ class Affiliate_WP_Visits_Tracking {
 			$response = wp_remote_post( $store_url, $pload );
 			$code     = wp_remote_retrieve_response_code( $response );
 
-			if ( ! is_wp_error( $response ) && ( 201 == $code || 200 == $code ) ) {
+			if ( ! is_wp_error( $response ) && ( 201 === $code || 200 === $code ) ) {
 				$body = json_decode( wp_remote_retrieve_body( $response ) );
 				setcookie( 'affwp_visit_id', $body->visit_id, strtotime( $cookie_time ), '/' );
 			}
