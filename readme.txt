@@ -1,12 +1,17 @@
 === Cross Domain Tracker for AffiliateWP ===
 Contributors: brainstormforce
 Donate link: https://www.paypal.me/BrainstormForce
-Tags: AffiliateWP, Cross domain tracking
+Tags: AffiliateWp, Cross domain tracking
 Requires at least: 4.4
 Tested up to: 5.2
-Stable tag: 1.1.18
+Stable tag: 1.0.0
 Requires PHP: 5.6
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
+Recover your lost revenue. Capture email address of users on the checkout page and send follow up emails if they don't complete the purchase.
+
+== Description ==
 The official AffiliateWP – External Referral Links add-on is excellent for tracking referrals from different domains. But it has some limitations.
 
 1. It does not send visits data to AffiliateWP — which means, your affiliates do not get to see any information of the visits data and other important statistics accurately.
@@ -25,9 +30,32 @@ And you are all set.
 
 Your affiliates can now start sending traffic to your marketing website (SiteB.com) and still see all the statistics and reports in their AffiliateWP dashboard.
 
+== Frequently Asked Questions ==
+
+= Are there seperate plugins for AffiliateWP and marketing site? =
+
+No, you just need to select the plugin type as parent/child inside the plugin settings.
+
+
+== Installation ==
+
+1. Upload `cross-domain-tracker-for-affiliate.zip` to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+
+== Frequently Asked Questions ==
+
+= Does this plugin work with CartFlows? =
+
+Yes, of course. We have built it in a way that it will work with CartFlows as well as with WooCommerce.
+
+=== Screenshots ===
+1. Settings https://cl.ly/2f631b6aa616
+
 
 == Changelog ==
 
+= Version 1.0.0 - Monday, 20th May 2019 =
+* Initial Release
 
-
-== Upgrade Notice ==
+ == Upgrade Notice ==
+ Please upgrade to get the latest features and security updates.
