@@ -49,7 +49,6 @@ No, you just need to select the plugin type as parent/child inside the plugin se
 Yes, of course. We have built it in a way that it will work with CartFlows as well as with WooCommerce.
 
 === Screenshots ===
-1. Settings https://cl.ly/2f631b6aa616
 
 
 == Changelog ==
