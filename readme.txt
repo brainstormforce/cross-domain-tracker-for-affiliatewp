@@ -43,7 +43,7 @@ No, you just need to select the plugin type as parent/child inside the plugin se
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 === Screenshots ===
-1. Settings
+
 
 == Changelog ==
 
