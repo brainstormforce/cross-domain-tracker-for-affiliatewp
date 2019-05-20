@@ -42,14 +42,8 @@ No, you just need to select the plugin type as parent/child inside the plugin se
 1. Upload `cross-domain-tracker-for-affiliate.zip` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
-== Frequently Asked Questions ==
-
-= Does this plugin work with CartFlows? =
-
-Yes, of course. We have built it in a way that it will work with CartFlows as well as with WooCommerce.
-
 === Screenshots ===
-
+1. Settings
 
 == Changelog ==
 
@@ -57,4 +51,3 @@ Yes, of course. We have built it in a way that it will work with CartFlows as we
 * Initial Release
 
  == Upgrade Notice ==
- Please upgrade to get the latest features and security updates.
