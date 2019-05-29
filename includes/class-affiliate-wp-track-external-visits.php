@@ -98,7 +98,7 @@ final class Affiliate_WP_Track_External_Visits {
 		}
 
 		$landing_page = isset( $_POST['store_url'] ) ? $_POST['store_url'] : '';
-		$store_url    = $landing_page . '/wp-json/affwp/v1/visits';
+		$store_url    = $landing_page . '/wp-json/affwp/v1/affiliates/?number=1';
 
 		$public_key = isset( $_POST['public_key'] ) ? $_POST['public_key'] : '';
 		$token      = isset( $_POST['token'] ) ? $_POST['token'] : '';
