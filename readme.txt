@@ -3,7 +3,7 @@ Contributors: brainstormforce
 Donate link: https://www.paypal.me/BrainstormForce
 Tags: AffiliateWp, Cross domain tracking
 Requires at least: 4.4
-Tested up to: 5.2
+Tested up to: 5.2.1
 Stable tag: 1.0.1
 Requires PHP: 5.6
 License: GPLv2 or later
