@@ -46,7 +46,7 @@ No, you just need to select the plugin type as parent/child inside the plugin se
 == Changelog ==
 
 = Version 1.0.1 - Monday, 30th May 2019 =
-* Fixed issue with Authentication with new AffiliateWP set up where visits would be Zero.
+* Fix: Authentication with new AffiliateWP setup where visits are Zero.
 
 = Version 1.0.0 - Monday, 20th May 2019 =
 * Initial Release
