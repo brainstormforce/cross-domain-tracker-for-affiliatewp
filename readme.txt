@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/BrainstormForce
 Tags: AffiliateWp, Cross domain tracking
 Requires at least: 4.4
 Tested up to: 5.2
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -44,6 +44,9 @@ No, you just need to select the plugin type as parent/child inside the plugin se
 
 
 == Changelog ==
+
+= Version 1.0.1 - Monday, 30th May 2019 =
+* Fixed issue with Authentication with new AffiliateWP set up where visits would be Zero.
 
 = Version 1.0.0 - Monday, 20th May 2019 =
 * Initial Release
