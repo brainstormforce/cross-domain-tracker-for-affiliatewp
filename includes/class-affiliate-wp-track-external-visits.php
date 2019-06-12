@@ -173,8 +173,8 @@ final class Affiliate_WP_Track_External_Visits {
 	 */
 	public function register_menu() {
 		add_options_page(
-			__( 'Cross Domain Tracker for AffiliateWP', 'affiliatewp-external-visits' ),
-			__( 'Cross Domain Tracker for AffiliateWP', 'affiliatewp-external-visits' ),
+			__( 'CDT For AWP', 'affiliatewp-external-visits' ),
+			__( 'CDT For AWP', 'affiliatewp-external-visits' ),
 			'manage_options',
 			CDTAWP_PAGE,
 			array( $this, 'admin_page_view_callback' )
@@ -190,11 +190,11 @@ final class Affiliate_WP_Track_External_Visits {
 
 		if ( CDTAWP_PLUGIN_PARENT === $this->get_option( 'cdtawp_plugin_type' ) ) {
 			if ( ! is_plugin_active( 'affiliate-wp/affiliate-wp.php' ) ) {
-				echo '<div class="error is-dismissible"><p>' . __( 'Please install/activate the <a target="_blank" href="https://affiliatewp.com/">AffiliateWP</a> plugin in order to use Cross Domain Tracker for AffiliateWP.', 'affiliatewp-rest-api-extended' ) . '</p></div>';
+				echo '<div class="error is-dismissible"><p>' . __( 'Please install/activate the <a target="_blank" href="https://affiliatewp.com/">AffiliateWP</a> plugin in order to use Cross Domain Tracker for AffiliateWP.', 'affiliatewp-external-visits' ) . '</p></div>';
 			}
 
 			if ( ! is_plugin_active( 'affiliatewp-rest-api-extended/affiliatewp-rest-api-extended.php' ) ) {
-				echo '<div class="error is-dismissible"><p>' . __( 'Please install/activate the <a target="_blank" href="https://affiliatewp.com/add-ons/pro/rest-api-extended/">AffiliateWP REST API Extended</a> plugin in order to use Cross Domain Tracker for AffiliateWP.', 'affiliatewp-rest-api-extended' ) . '</p></div>';
+				echo '<div class="error is-dismissible"><p>' . __( 'Please install/activate the <a target="_blank" href="https://affiliatewp.com/add-ons/pro/rest-api-extended/">AffiliateWP REST API Extended</a> plugin in order to use Cross Domain Tracker for AffiliateWP.', 'affiliatewp-external-visits' ) . '</p></div>';
 			}
 		}
 
@@ -239,7 +239,7 @@ final class Affiliate_WP_Track_External_Visits {
 			array(
 				'name'        => 'cdtawp_plugin_type',
 				'id'          => 'cdtawp_plugin_type',
-				'description' => __( 'Parent - Select this option on the main website where you have AffiliateWP plugin installed and where conversions take place. <br/> Child - Select this option on a marketing website where your affiliates send traffic. ', 'affiliatewp-external-referral-links' ),
+				'description' => __( 'Parent - Select this option on the main website where you have AffiliateWP plugin installed and where conversions take place. <br/> Child - Select this option on a marketing website where your affiliates send traffic. ', 'affiliatewp-external-visits' ),
 			)
 		);
 
@@ -253,7 +253,7 @@ final class Affiliate_WP_Track_External_Visits {
 			array(
 				'name'        => 'cdtawp_store_url',
 				'id'          => 'cdtawp_store_url',
-				'description' => __( 'The site URL where AffiliateWP is actually installed.', 'affiliatewp-external-referral-links' ),
+				'description' => __( 'The site URL where AffiliateWP is actually installed.', 'affiliatewp-external-visits' ),
 			)
 		);
 
@@ -267,7 +267,7 @@ final class Affiliate_WP_Track_External_Visits {
 			array(
 				'name'        => 'cdtawp_referral_variable',
 				'id'          => 'cdtawp_referral_variable',
-				'description' => __( 'The referral variable you have set in AffiliateWP at the site URL above. It must match exactly.', 'affiliatewp-external-referral-links' ),
+				'description' => __( 'The referral variable you have set in AffiliateWP at the site URL above. It must match exactly.', 'affiliatewp-external-visits' ),
 			)
 		);
 
@@ -281,7 +281,7 @@ final class Affiliate_WP_Track_External_Visits {
 			array(
 				'name'        => 'cdtawp_cookie_expiration',
 				'id'          => 'cdtawp_cookie_expiration',
-				'description' => __( 'How many days should the referral tracking cookie be valid for?', 'affiliatewp-external-referral-links' ),
+				'description' => __( 'How many days should the referral tracking cookie be valid for?', 'affiliatewp-external-visits' ),
 			)
 		);
 
