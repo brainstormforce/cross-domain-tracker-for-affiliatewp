@@ -1,3 +1,6 @@
+Version 1.0.2 - Monday, 24th Aug 2020
+- Improvement: Compatibility with WordPress 5.5.
+
 Version 1.0.1 - Monday, 30th May 2019
 - Fix: Authentication with new AffiliateWP setup where visits are Zero.
 
