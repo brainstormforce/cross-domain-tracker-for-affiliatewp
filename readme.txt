@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/BrainstormForce
 Tags: AffiliateWp, Cross domain tracking
 Requires at least: 4.4
 Tested up to: 5.5
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -45,6 +45,9 @@ No, you just need to select the plugin type as parent/child inside the plugin se
 
 
 == Changelog ==
+
+= Version 1.0.3 - Thursday, 22th Oct 2020 =
+* Improvement: Hardened the sucurity.
 
 = Version 1.0.2 - Monday, 24th Aug 2020 =
 * Improvement: Compatibility with WordPress 5.5.
