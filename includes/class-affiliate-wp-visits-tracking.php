@@ -130,7 +130,7 @@ class Affiliate_WP_Visits_Tracking {
 				setcookie( 'affwp_ref_visit_id', sanitize_text_field( $affiliate_visited_id ), strtotime( '+' . $cookie_expiration . ' days' ), '/' );
 			}
 			if ( $affwp_campaign ) {
-				setcookie( 'affwp_campaign',  sanitize_text_field( $affwp_campaign ), strtotime( '+' . $cookie_expiration . ' days' ), '/' );
+				setcookie( 'affwp_campaign', sanitize_text_field( $affwp_campaign ), strtotime( '+' . $cookie_expiration . ' days' ), '/' );
 			}
 		}
 
