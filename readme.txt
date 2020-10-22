@@ -47,7 +47,7 @@ No, you just need to select the plugin type as parent/child inside the plugin se
 == Changelog ==
 
 = Version 1.0.3 - Thursday, 22th Oct 2020 =
-* Improvement: Hardened the sucurity.
+* Improvement: Hardened the security.
 
 = Version 1.0.2 - Monday, 24th Aug 2020 =
 * Improvement: Compatibility with WordPress 5.5.
