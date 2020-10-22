@@ -118,19 +118,19 @@ class Affiliate_WP_Visits_Tracking {
 		$cookie_expiration = isset( $affwp_settings['cookie_exp'] ) ? $affwp_settings['cookie_exp'] : 0;
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		$affiliate_id         = isset( $_GET[ $referral ] ) ? sanitize_text_field( $_GET[ $referral ] ) : 0;
-		$affiliate_visited_id = isset( $_GET['visit'] ) ? sanitize_text_field( $_GET['visit'] ) : 0;
-		$affwp_campaign       = isset( $_GET['campaign'] ) ? sanitize_text_field( $_GET['campaign'] ) : '';
+		$affiliate_id         = isset( $_GET[ $referral ] ) ? $_GET[ $referral ] : 0;
+		$affiliate_visited_id = isset( $_GET['visit'] ) ? $_GET['visit'] : 0;
+		$affwp_campaign       = isset( $_GET['campaign'] ) ? $_GET['campaign'] : '';
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		if ( $affiliate_id && $affiliate_visited_id ) {
 			$visit_details = $this->get_visit( $affiliate_visited_id );
 			if ( isset( $visit_details->affiliate_id ) && $visit_details->affiliate_id === $affiliate_id ) {
-				setcookie( 'affwp_ref', $affiliate_id, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
-				setcookie( 'affwp_ref_visit_id', $affiliate_visited_id, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
+				setcookie( 'affwp_ref', sanitize_text_field( $affiliate_id ), strtotime( '+' . $cookie_expiration . ' days' ), '/' );
+				setcookie( 'affwp_ref_visit_id', sanitize_text_field( $affiliate_visited_id ), strtotime( '+' . $cookie_expiration . ' days' ), '/' );
 			}
 			if ( $affwp_campaign ) {
-				setcookie( 'affwp_campaign', $affwp_campaign, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
+				setcookie( 'affwp_campaign',  sanitize_text_field( $affwp_campaign ), strtotime( '+' . $cookie_expiration . ' days' ), '/' );
 			}
 		}
 
