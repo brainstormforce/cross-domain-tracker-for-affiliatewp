@@ -46,6 +46,10 @@ No, you just need to select the plugin type as parent/child inside the plugin se
 
 == Changelog ==
 
+= Version 1.0.3 - Monday, 24th Aug 2020 =
+* Improvement: Compatibility with WooCommerce 5.1.0
+* Improvement: Compatibility with WordPress 5.7
+
 = Version 1.0.2 - Monday, 24th Aug 2020 =
 * Improvement: Compatibility with WordPress 5.5.
 
