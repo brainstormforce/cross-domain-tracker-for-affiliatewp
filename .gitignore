@@ -24,3 +24,4 @@ phpcs-full.log
 # Exclude composer's directories
 vendor/
 composer.lock
+config.bat
