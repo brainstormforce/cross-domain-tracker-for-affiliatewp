@@ -118,9 +118,9 @@ class Affiliate_WP_Visits_Tracking {
 		$cookie_expiration = isset( $affwp_settings['cookie_exp'] ) ? $affwp_settings['cookie_exp'] : 0;
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		$affiliate_id         = isset( $_GET[ $referral ] ) ? $_GET[ $referral ] : 0;
-		$affiliate_visited_id = isset( $_GET['visit'] ) ? $_GET['visit'] : 0;
-		$affwp_campaign       = isset( $_GET['campaign'] ) ? $_GET['campaign'] : '';
+		$affiliate_id         = isset( $_GET[ $referral ] ) ? absint( $_GET[ $referral ] ) : 0;
+		$affiliate_visited_id = isset( $_GET['visit'] ) ? absint( $_GET['visit'] ) : 0;
+		$affwp_campaign       = isset( $_GET['campaign'] ) ? sanitize_text_field( $_GET['campaign'] ) : '';
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		if ( $affiliate_id && $affiliate_visited_id ) {
