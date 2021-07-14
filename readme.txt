@@ -46,7 +46,11 @@ No, you just need to select the plugin type as parent/child inside the plugin se
 
 == Changelog ==
 
-= Version 1.0.3 - Monday, 24th Aug 2020 =
+= Version 1.0.4 - Wednesday, 14th July 2021 =
+* Improvement: Updated the type of input field for authentication options.
+* Improvement: Compatibility with WordPress 5.8
+
+= Version 1.0.3 - Wednesday, 10th March 2021 =
 * Improvement: Compatibility with WooCommerce 5.1.0
 * Improvement: Compatibility with WordPress 5.7
 
