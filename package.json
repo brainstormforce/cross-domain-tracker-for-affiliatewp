@@ -1,6 +1,6 @@
 {
   "name": "cross-domain-tracker-for-affiliatewp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Track referrals from different domains.",
   "main": "Gruntfile.js",
   "scripts": {

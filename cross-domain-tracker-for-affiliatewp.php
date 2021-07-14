@@ -5,7 +5,7 @@
  * Description: Track referrals from different domains.
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
- * Version: 1.0.3
+ * Version: 1.0.4
  * Text Domain: affiliatewp-external-visits
  * Domain Path: languages
  * WC requires at least: 3.0
