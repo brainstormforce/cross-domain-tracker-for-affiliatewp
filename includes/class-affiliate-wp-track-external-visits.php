@@ -432,7 +432,7 @@ final class Affiliate_WP_Track_External_Visits {
 
 		$value = isset( $options[ $args['name'] ] ) ? $options[ $args['name'] ] : '';
 		?>
-		<input style="width: 30%" type="password" id="<?php echo $args['id']; ?>" name="<?php echo CDTAWP_SETTINGS_GROUP; ?>[<?php echo $args['name']; ?>]" value="<?php echo $value; ?>"/>
+		<input style="width: 30%" type="password" id="<?php echo esc_attr($args['id']); ?>" name="<?php echo esc_attr(CDTAWP_SETTINGS_GROUP); ?>[<?php echo esc_attr($args['name']); ?>]" value="<?php echo esc_attr($value); ?>"/>
 
 		<?php if ( isset( $args['description'] ) ) : ?>
 		<p class="description"><?php echo $args['description']; ?></p>
