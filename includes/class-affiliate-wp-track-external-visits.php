@@ -163,7 +163,7 @@ final class Affiliate_WP_Track_External_Visits {
 		define( 'CDTAWP_PLUGIN_CHILD', 'Child' );
 		define( 'CDTAWP_PLUGIN_PARENT', 'Parent' );
 
-		define( 'CDTAWP_VERSION', '1.0.3' );
+		define( 'CDTAWP_VERSION', '1.0.4' );
 	}
 
 	/**
