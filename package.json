@@ -24,7 +24,7 @@
     "grunt-rtlcss": "^2.0.1",
     "grunt-wp-i18n": "^1.0.3",
     "postcss-flexibility": "^2.0.0",
-    "shelljs": "~0.8.3"
+    "shelljs": "~0.8.5"
   },
   "repository": {
     "type": "git",
