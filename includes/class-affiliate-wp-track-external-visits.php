@@ -173,8 +173,8 @@ final class Affiliate_WP_Track_External_Visits {
 	 */
 	public function register_menu() {
 		add_options_page(
-			__( 'Cross Domain Tracker for AffiliateWP', 'affiliatewp-external-visits' ),
-			__( 'Cross Domain Tracker for AffiliateWP', 'affiliatewp-external-visits' ),
+			__( 'CDT For AWP', 'affiliatewp-external-visits' ),
+			__( 'CDT For AWP', 'affiliatewp-external-visits' ),
 			'manage_options',
 			CDTAWP_PAGE,
 			array( $this, 'admin_page_view_callback' )
