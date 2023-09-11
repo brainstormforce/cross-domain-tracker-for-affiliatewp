@@ -6,12 +6,12 @@ jQuery(document).ready(
             function () {
 	            $("#connection_msg").text('');
                 if ("Child" == $('#cdtawp_plugin_type').val() ) {
-                    $('#cdtawp_store_url, #cdtawp_referral_variable, #cdtawp_cookie_expiration, #cdtawp_referral_credit_last, #cdtawp_public_key, #cdtawp_token').closest('tr').fadeIn();
+                    $('#cdtawp_store_url, #cdtawp_referral_variable, #cdtawp_cookie_expiration, #cdtawp_referral_credit_last, #cdtawp_share_cookies, #cdtawp_public_key, #cdtawp_token').closest('tr').fadeIn();
                     $(("h2:contains('Authenticate with AffiliateWP')")).fadeIn();
                     $(("h2:contains('Authenticate with AffiliateWP')")).next('p').fadeIn();
                     $("#check_store_connection").fadeIn();
                 } else {
-                    $('#cdtawp_store_url, #cdtawp_referral_variable, #cdtawp_cookie_expiration, #cdtawp_referral_credit_last, #cdtawp_public_key, #cdtawp_token').closest('tr').fadeOut();
+                    $('#cdtawp_store_url, #cdtawp_referral_variable, #cdtawp_cookie_expiration, #cdtawp_referral_credit_last, #cdtawp_share_cookies, #cdtawp_public_key, #cdtawp_token').closest('tr').fadeOut();
 	                $(("h2:contains('Authenticate with AffiliateWP')")).fadeOut();
 	                $(("h2:contains('Authenticate with AffiliateWP')")).next('p#cdtawp_auth_desc').fadeOut();
 	                $("#check_store_connection").fadeOut();
@@ -20,7 +20,7 @@ jQuery(document).ready(
         );
         
         if ("Parent" == $('#cdtawp_plugin_type').val() ) {
-            $('#cdtawp_store_url, #cdtawp_referral_variable, #cdtawp_cookie_expiration, #cdtawp_referral_credit_last, #cdtawp_public_key, #cdtawp_token').closest('tr').hide();
+            $('#cdtawp_store_url, #cdtawp_referral_variable, #cdtawp_cookie_expiration, #cdtawp_referral_credit_last, #cdtawp_public_key, #cdtawp_token, #cdtawp_share_cookies').closest('tr').hide();
             $(("h2:contains('Authenticate with AffiliateWP')")).hide();
             $(("h2:contains('Authenticate with AffiliateWP')")).next('p#cdtawp_auth_desc').hide();
             $("#check_store_connection").hide();

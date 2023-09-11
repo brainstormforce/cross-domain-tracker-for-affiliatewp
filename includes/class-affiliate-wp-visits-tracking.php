@@ -109,6 +109,24 @@ class Affiliate_WP_Visits_Tracking {
 	}
 
 	/**
+	 * Get site domain.
+	 *
+	 * @since 1.0
+	 */
+	private function get_domain() {
+
+		$options = get_option( CDTAWP_SETTINGS_GROUP );
+		$domain  = '';
+
+		if ( isset( $options['cdtawp_share_cookies'] ) && '1' === $options['cdtawp_share_cookies'] ) {
+			$site_host = wp_parse_url( get_site_url(), PHP_URL_HOST );
+			$domain    = str_replace( 'www.', '', $site_host );
+		}
+
+		return $domain;
+	}
+
+	/**
 	 * Catch referral visit via ajax
 	 */
 	public function track_visit_receiver() {
@@ -125,12 +143,13 @@ class Affiliate_WP_Visits_Tracking {
 
 		if ( $affiliate_id && $affiliate_visited_id ) {
 			$visit_details = $this->get_visit( $affiliate_visited_id );
+			$domain        = $this->get_domain();
 			if ( isset( $visit_details->affiliate_id ) && $visit_details->affiliate_id === $affiliate_id ) {
-				setcookie( 'affwp_ref', $affiliate_id, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
-				setcookie( 'affwp_ref_visit_id', $affiliate_visited_id, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
+				setcookie( 'affwp_ref', $affiliate_id, strtotime( '+' . $cookie_expiration . ' days' ), '/', $domain );
+				setcookie( 'affwp_ref_visit_id', $affiliate_visited_id, strtotime( '+' . $cookie_expiration . ' days' ), '/', $domain );
 			}
 			if ( $affwp_campaign ) {
-				setcookie( 'affwp_campaign', $affwp_campaign, strtotime( '+' . $cookie_expiration . ' days' ), '/' );
+				setcookie( 'affwp_campaign', $affwp_campaign, strtotime( '+' . $cookie_expiration . ' days' ), '/', $domain );
 			}
 		}
 
@@ -185,20 +204,20 @@ class Affiliate_WP_Visits_Tracking {
 
 		$cookie_affiliate_id   = isset( $_COOKIE['affwp_affiliate_id'] ) ? absint( $_COOKIE['affwp_affiliate_id'] ) : 0;
 		$cookie_affwp_campaign = isset( $_COOKIE['affwp_campaign'] ) ? $_COOKIE['affwp_campaign'] : 0;
-
-		$cookie_time = '+' . $this->get_option( 'cdtawp_cookie_expiration' ) . ' day';
-		setcookie( 'affwp_affiliate_id', $affiliate_id, strtotime( $cookie_time ), '/' );
+		$domain                = $this->get_domain();
+		$cookie_time           = '+' . $this->get_option( 'cdtawp_cookie_expiration' ) . ' day';
+		setcookie( 'affwp_affiliate_id', $affiliate_id, strtotime( $cookie_time ), '/', $domain );
 
 		if ( ! $cookie_affwp_campaign && isset( $_GET['campaign'] ) ) {
-			setcookie( 'affwp_campaign', $campaign, strtotime( $cookie_time ), '/' );
+			setcookie( 'affwp_campaign', $campaign, strtotime( $cookie_time ), '/', $domain );
 		}
 
 		if ( $affiliate_id !== $cookie_affiliate_id && $affiliate_id ) {
 
 			if ( ! isset( $settings['cdtawp_referral_credit_last'] ) && $cookie_affiliate_id ) {
-				setcookie( 'affwp_affiliate_id', $cookie_affiliate_id, strtotime( $cookie_time ), '/' );
+				setcookie( 'affwp_affiliate_id', $cookie_affiliate_id, strtotime( $cookie_time ), '/', $domain );
 			}
-			setcookie( 'affwp_campaign', $campaign, strtotime( $cookie_time ), '/' );
+			setcookie( 'affwp_campaign', $campaign, strtotime( $cookie_time ), '/', $domain );
 			$current_page_url = explode( '?', $this->current_location() );
 			$landing_page     = $current_page_url[0];
 			$store_url        = $this->get_option( 'cdtawp_store_url' ) . '/wp-json/affwp/v1/visits';
@@ -233,7 +252,7 @@ class Affiliate_WP_Visits_Tracking {
 
 			if ( ! is_wp_error( $response ) && ( 201 === $code || 200 === $code ) ) {
 				$body = json_decode( wp_remote_retrieve_body( $response ) );
-				setcookie( 'affwp_visit_id', $body->visit_id, strtotime( $cookie_time ), '/' );
+				setcookie( 'affwp_visit_id', $body->visit_id, strtotime( $cookie_time ), '/', $domain );
 			}
 		}
 

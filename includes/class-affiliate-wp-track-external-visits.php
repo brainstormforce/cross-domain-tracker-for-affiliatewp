@@ -299,6 +299,20 @@ final class Affiliate_WP_Track_External_Visits {
 			)
 		);
 
+		// Credit last referral.
+		add_settings_field(
+			'Share Cookies across subdomains',
+			__( 'Share Cookies', 'affiliatewp-external-visits' ),
+			array( $this, 'callback_cookie_input_checkbox' ),
+			CDTAWP_PAGE,
+			CDTAWP_SECTION,
+			array(
+				'name'        => 'cdtawp_share_cookies',
+				'id'          => 'cdtawp_share_cookies',
+				'description' => __( 'Enable cross-subdomain cookie sharing.', 'affiliatewp-external-visits' ),
+			)
+		);
+
 		// Child plugin settings.
 		add_settings_section(
 			CDTAWP_CONNECTION_SECTION,
@@ -414,6 +428,7 @@ final class Affiliate_WP_Track_External_Visits {
 			'cdtawp_store_url'            => '',
 			'cdtawp_public_key'           => '',
 			'cdtawp_token'                => '',
+			'cdtawp_share_cookies'        => '',
 		);
 
 		return apply_filters( 'cdtawp_default_options', $defaults );
@@ -432,7 +447,7 @@ final class Affiliate_WP_Track_External_Visits {
 
 		$value = isset( $options[ $args['name'] ] ) ? $options[ $args['name'] ] : '';
 		?>
-		<input style="width: 30%" type="password" id="<?php echo esc_attr($args['id']); ?>" name="<?php echo esc_attr(CDTAWP_SETTINGS_GROUP); ?>[<?php echo esc_attr($args['name']); ?>]" value="<?php echo esc_attr($value); ?>"/>
+		<input style="width: 30%" type="password" id="<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( CDTAWP_SETTINGS_GROUP ); ?>[<?php echo esc_attr( $args['name'] ); ?>]" value="<?php echo esc_attr( $value ); ?>"/>
 
 		<?php if ( isset( $args['description'] ) ) : ?>
 		<p class="description"><?php echo $args['description']; ?></p>
@@ -485,7 +500,6 @@ final class Affiliate_WP_Track_External_Visits {
 		<?php
 
 	}
-
 	/**
 	 * Input field callback
 	 *
@@ -493,6 +507,27 @@ final class Affiliate_WP_Track_External_Visits {
 	 * @since 1.0.0
 	 */
 	public function callback_input_checkbox( $args ) {
+
+		$options = get_option( CDTAWP_SETTINGS_GROUP );
+		$value   = isset( $options[ $args['name'] ] ) ? true : false;
+
+		?>
+		<input <?php echo $value ? 'checked' : ''; ?> type="checkbox" id="<?php echo $args['id']; ?>" name="<?php echo CDTAWP_SETTINGS_GROUP; ?>[<?php echo $args['name']; ?>]" value="<?php echo $value; ?>"/>
+		<?php echo $args['description']; ?>
+		<?php if ( isset( $args['description'] ) ) : ?>
+		<p class="description"></p>
+		<?php endif; ?>
+		<?php
+
+	}
+
+	/**
+	 * Input field callback
+	 *
+	 * @param array $args arguments.
+	 * @since 1.0.0
+	 */
+	public function callback_cookie_input_checkbox( $args ) {
 
 		$options = get_option( CDTAWP_SETTINGS_GROUP );
 		$value   = isset( $options[ $args['name'] ] ) ? true : false;
