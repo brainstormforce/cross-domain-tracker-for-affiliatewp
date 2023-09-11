@@ -118,8 +118,8 @@ class Affiliate_WP_Visits_Tracking {
 		$options = get_option( CDTAWP_SETTINGS_GROUP );
 		$domain  = '';
 
-		if ( isset( $options['cdtawp_send_cookies'] ) && '1' === $options['cdtawp_send_cookies'] ) {
-			$site_host = wp_parse_url( 'http://www.you.com', PHP_URL_HOST );
+		if ( isset( $options['cdtawp_share_cookies'] ) && '1' === $options['cdtawp_share_cookies'] ) {
+			$site_host = wp_parse_url( get_site_url(), PHP_URL_HOST );
 			$domain    = str_replace( 'www.', '', $site_host );
 		}
 

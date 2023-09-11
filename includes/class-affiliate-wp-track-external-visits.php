@@ -301,15 +301,15 @@ final class Affiliate_WP_Track_External_Visits {
 
 		// Credit last referral.
 		add_settings_field(
-			'Credit Last Referral',
-			__( 'Send Cookies', 'affiliatewp-external-visits' ),
+			'Share Cookies across subdomains',
+			__( 'Share Cookies', 'affiliatewp-external-visits' ),
 			array( $this, 'callback_cookie_input_checkbox' ),
 			CDTAWP_PAGE,
 			CDTAWP_SECTION,
 			array(
-				'name'        => 'cdtawp_send_cookies',
-				'id'          => 'cdtawp_send_cookies',
-				'description' => __( 'Send cookies to subdomin', 'affiliatewp-external-visits' ),
+				'name'        => 'cdtawp_share_cookies',
+				'id'          => 'cdtawp_share_cookies',
+				'description' => __( 'Enable cross-subdomain cookie sharing.', 'affiliatewp-external-visits' ),
 			)
 		);
 
@@ -428,7 +428,7 @@ final class Affiliate_WP_Track_External_Visits {
 			'cdtawp_store_url'            => '',
 			'cdtawp_public_key'           => '',
 			'cdtawp_token'                => '',
-			'cdtawp_send_cookies'         => '',
+			'cdtawp_share_cookies'        => '',
 		);
 
 		return apply_filters( 'cdtawp_default_options', $defaults );
