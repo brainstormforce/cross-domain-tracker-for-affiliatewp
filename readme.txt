@@ -1,10 +1,10 @@
 === Cross Domain Tracker for AffiliateWP ===
-Contributors: brainstormforce
+Contributors: pratikchaskar
 Donate link: https://www.paypal.me/BrainstormForce
 Tags: AffiliateWp, Cross domain tracking
 Requires at least: 4.4
-Tested up to: 5.8
-Stable tag: 1.0.4
+Tested up to: 6.6
+Stable tag: 1.0.5
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -45,6 +45,9 @@ No, you just need to select the plugin type as parent/child inside the plugin se
 
 
 == Changelog ==
+
+= Version 1.0.5 - Thursday, 11th July 2024 =
+* Improvement: Compatibility with WordPress 6.6.
 
 = Version 1.0.4 - Wednesday, 14th July 2021 =
 * Improvement: Updated the type of input field for authentication options.

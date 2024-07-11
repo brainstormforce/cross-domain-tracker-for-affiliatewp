@@ -1,6 +1,6 @@
 {
   "name": "cross-domain-tracker-for-affiliatewp",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Track referrals from different domains.",
   "main": "Gruntfile.js",
   "scripts": {
@@ -30,6 +30,6 @@
     "type": "git",
     "url": "git@github.com:brainstormforce/cross-domain-tracker-for-affiliatewp.git"
   },
-  "author": "Brainstorm Force",
+  "author": "Pratik Chaskar",
   "license": "ISC"
 }
