@@ -3,7 +3,7 @@ Contributors: pratikchaskar
 Tags: AffiliateWp, Cross domain tracking
 Requires at least: 4.4
 Tested up to: 6.9
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -44,6 +44,9 @@ No, you just need to select the plugin type as parent/child inside the plugin se
 
 
 == Changelog ==
+
+= Version 1.0.6 =
+* Fix: Referral tracking cookies were not being set on cached landing pages. Visits are now recorded on the child site over a non-cacheable AJAX request so the cookies are set reliably even behind a full-page cache or CDN (e.g. Cloudflare) that strips Set-Cookie headers.
 
 = Version 1.0.5 - Thursday, 11th July 2024 =
 * Improvement: Compatibility with WordPress 6.6.

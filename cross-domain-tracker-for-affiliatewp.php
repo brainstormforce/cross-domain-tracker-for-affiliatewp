@@ -5,7 +5,7 @@
  * Description: Track referrals from different domains.
  * Author: Pratik Chaskar
  * Author URI: https://pratikchaskar.com
- * Version: 1.0.5
+ * Version: 1.0.6
  * Text Domain: affiliatewp-external-visits
  * Domain Path: languages
  * WC requires at least: 3.0

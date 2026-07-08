@@ -163,7 +163,7 @@ final class Affiliate_WP_Track_External_Visits {
 		define( 'CDTAWP_PLUGIN_CHILD', 'Child' );
 		define( 'CDTAWP_PLUGIN_PARENT', 'Parent' );
 
-		define( 'CDTAWP_VERSION', '1.0.4' );
+		define( 'CDTAWP_VERSION', '1.0.6' );
 	}
 
 	/**
@@ -569,14 +569,16 @@ final class Affiliate_WP_Track_External_Visits {
 		include_once self::$plugin_dir . 'includes/class-affiliate-wp-visits-tracking.php';
 		$visit_tracking = new Affiliate_WP_Visits_Tracking();
 
-		if ( ! is_admin() ) {
-			if ( isset( $options['cdtawp_plugin_type'] ) && CDTAWP_PLUGIN_CHILD === $options['cdtawp_plugin_type'] ) {
-				// Child plugin send tracked visit.
-				$visit_tracking->track_visit_sender();
-			} else {
-				// Parent plugin receive sent visit.
-				$visit_tracking->track_visit_receiver();
-			}
+		// The child site records the visit over a non-cacheable AJAX request
+		// ( Affiliate_WP_Visits_Tracking::ajax_track_visit() ) so a full-page
+		// cache / CDN cannot strip the tracking cookies from a cached
+		// landing-page response. The parent site records the incoming visit on
+		// page load.
+		$is_child = isset( $options['cdtawp_plugin_type'] ) && CDTAWP_PLUGIN_CHILD === $options['cdtawp_plugin_type'];
+
+		if ( ! is_admin() && ! $is_child ) {
+			// Parent plugin receive sent visit.
+			$visit_tracking->track_visit_receiver();
 		}
 	}
 
